@@ -1,0 +1,29 @@
+{
+  "version": 2,
+  "dgSpecHash": "+yrJvwR8Owlp9qAURDnEEP5VV3PhvCCqUipoM/B1F94Be4GJisxyTavts7q01PTZxpT0CsQwaiXmR4EQpYGeWQ==",
+  "success": true,
+  "projectFilePath": "D:\\Work Speace\\Demo Project\\NetServer\\SocketServer\\SocketServer.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\姬晴天\\.nuget\\packages\\messagepack\\2.5.140\\messagepack.2.5.140.nupkg.sha512",
+    "C:\\Users\\姬晴天\\.nuget\\packages\\messagepack.annotations\\2.5.140\\messagepack.annotations.2.5.140.nupkg.sha512",
+    "C:\\Users\\姬晴天\\.nuget\\packages\\messagepipe\\1.7.4\\messagepipe.1.7.4.nupkg.sha512",
+    "C:\\Users\\姬晴天\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\6.0.0\\microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512",
+    "C:\\Users\\姬晴天\\.nuget\\packages\\microsoft.net.stringtools\\17.6.3\\microsoft.net.stringtools.17.6.3.nupkg.sha512",
+    "C:\\Users\\姬晴天\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
+    "C:\\Users\\姬晴天\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",
+    "C:\\Users\\姬晴天\\.nuget\\packages\\unirx\\5.4.1\\unirx.5.4.1.nupkg.sha512",
+    "C:\\Users\\姬晴天\\.nuget\\packages\\unitask\\2.5.0\\unitask.2.5.0.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "已使用“.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1”而不是项目目标框架“net8.0”还原包“UniRx 5.4.1”。此包可能与项目不完全兼容。",
+      "libraryId": "UniRx",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
+}
