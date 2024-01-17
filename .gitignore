@@ -12,6 +12,9 @@
 /NetClient/[Mm]emoryCaptures/
 /NetClient/[Rr]ecordings/
 /NetClient/[Aa]ssets/Plugins/Editor/JetBrains*
+/NetClient/*.sln
+/NetClient/*.csproj
+/NetClient/*.vsconfig
 
 /DoodleJump/[Ll]ibrary/
 /DoodleJump/[Tt]emp/
@@ -23,8 +26,9 @@
 /DoodleJump/[Mm]emoryCaptures/
 /DoodleJump/[Rr]ecordings/
 /DoodleJump/[Aa]ssets/Plugins/Editor/JetBrains*
-
-
+/DoodleJump/*.sln
+/DoodleJump/*.csproj
+/DoodleJump/*.vsconfig
 
 .vs/
 
