@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 /// <summary>
 /// 等级判断  生成位置
 /// </summary>
-public class FloorSystem : IDisposable
+public class FloorSystem : SystemBase
 {
     /// <summary>
     /// 上下边界
@@ -16,8 +16,6 @@ public class FloorSystem : IDisposable
     private float _currentHeight = 0.0f;
 
     private Vector3 _floorLsatPos = Vector3.zero;
-
-    private IDisposable _updataTask = null;
 
     private FloorPoolManager _floorObjectPool = null;
 
@@ -29,26 +27,24 @@ public class FloorSystem : IDisposable
     /// <summary>
     /// 加载用到的地板类型和概率
     /// </summary>
-    public void Init()
+    public override void SystemInit()
     {
         _gameGradeDataTable = ResManager.Instance.Load<GameGradeDataTable>("Assets/Res/Configs/GameGradeDataTable.asset");
         _gameGradeDataAsset = _gameGradeDataTable.gameGradeAsset[0];
         _floorObjectPool = new FloorPoolManager(_gameGradeDataAsset._dictFloorTypeProbability);
-        _updataTask?.Dispose();
     }
 
-    public void Start()
+    public override void SystemStart()
     {
         _currentHeight = Camera.main.transform.position.y - _generateRange;
-        _updataTask = Observable.EveryLateUpdate().Subscribe(_ => UpdataTask());
     }
 
-    public void Dispose()
+    public override void SystemUpdata()
     {
-        _updataTask?.Dispose();
+
     }
 
-    private void UpdataTask()
+    public override void SystemDestroy()
     {
         CreateFloor();
         RecoveryFloor();

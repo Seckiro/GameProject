@@ -59,26 +59,29 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Common\MonoSingleton.cs" />
+    <Compile Include="Assets\Scripts\Managers\AudioManager.cs" />
     <Compile Include="Assets\Scripts\Character\CharacterDisplay.cs" />
     <Compile Include="Assets\Scripts\UI\Core\BasePanel.cs" />
     <Compile Include="Assets\Scripts\UI\EndPanel\EndPanelLogic.cs" />
-    <Compile Include="Assets\Scripts\TestScript.cs" />
     <Compile Include="Assets\Scripts\Logic\Floors\FloorSystem.cs" />
+    <Compile Include="Assets\Scripts\Managers\SystemBase.cs" />
     <Compile Include="Assets\Scripts\UI\Core\PanelType.cs" />
     <Compile Include="Assets\Scripts\Logic\TouchManager.cs" />
     <Compile Include="Assets\Scripts\Logic\Floors\FloorBase.cs" />
+    <Compile Include="Assets\Scripts\Managers\ISystemBase.cs" />
     <Compile Include="Assets\Scripts\UI\PausePanel\IPausePanel.cs" />
     <Compile Include="Assets\ThirdPlugins\SerializableDictionary\SerializableDictionary.cs" />
     <Compile Include="Assets\Scripts\Logic\CameraFollow.cs" />
+    <Compile Include="Assets\Scripts\Managers\ResManager.cs" />
     <Compile Include="Assets\Scripts\Logic\FloorObjectPool.cs" />
     <Compile Include="Assets\Scripts\Logic\Floors\GameGradeDataTable.cs" />
     <Compile Include="Assets\Scripts\UI\StartPanel\StartPanel.cs" />
     <Compile Include="Assets\Scripts\Common\SingletonMono.cs" />
     <Compile Include="Assets\Scripts\UI\Core\UIConfig.cs" />
+    <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
     <Compile Include="Assets\Scripts\UI\EndPanel\EndPanel.cs" />
-    <Compile Include="Assets\Scripts\AudioManager.cs" />
     <Compile Include="Assets\ThirdPlugins\SerializableDictionary\Example\UserSerializableDictionaries.cs" />
-    <Compile Include="Assets\Scripts\ResManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\CharacterManager.cs" />
     <Compile Include="Assets\Scripts\UI\PausePanel\PausePanelLogic.cs" />
     <Compile Include="Assets\Scripts\UI\StartPanel\StartPanelLogic.cs" />
     <Compile Include="Assets\Scripts\UI\StartPanel\IStartPanel.cs" />
@@ -87,7 +90,6 @@
     <Compile Include="Assets\Res\InputConfig\CharacterControls.cs" />
     <Compile Include="Assets\Scripts\Logic\CharacterInput.cs" />
     <Compile Include="Assets\Scripts\UI\Core\IUIBase.cs" />
-    <Compile Include="Assets\Scripts\FloorPoolManager.cs" />
     <Compile Include="Assets\Scripts\Common\Singleton.cs" />
     <Compile Include="Assets\Scripts\UI\SettingPanel\SettingPanel.cs" />
     <Compile Include="Assets\Scripts\UI\PausePanel\PausePanel.cs" />
@@ -97,14 +99,13 @@
     <Compile Include="Assets\Scripts\Logic\GenerateFloor.cs" />
     <Compile Include="Assets\Scripts\Common\GameObjectExtend.cs" />
     <Compile Include="Assets\Scripts\Logic\Boundary.cs" />
-    <Compile Include="Assets\Scripts\CharacterManager.cs" />
     <Compile Include="Assets\Scripts\UI\LoadPanel\ILoadPanel.cs" />
-    <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\UI\LoadPanel\LoadPanel.cs" />
     <Compile Include="Assets\Scripts\Logic\FloorType.cs" />
     <Compile Include="Assets\Scripts\Logic\Floor.cs" />
     <Compile Include="Assets\Scripts\UI\Core\UIManager.cs" />
     <Compile Include="Assets\Scripts\Character\CharacterStatus.cs" />
+    <Compile Include="Assets\Scripts\Managers\FloorPoolManager.cs" />
     <Compile Include="Assets\Scripts\Character\CharacterAnimationTable.cs" />
     <Compile Include="Assets\ThirdPlugins\SerializableDictionary\Example\SerializableDictionaryExample.cs" />
   </ItemGroup>
