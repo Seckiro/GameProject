@@ -15,6 +15,7 @@ public class StartPanelLogic : IStartPanel
 
     public void Start()
     {
-        Debug.Log("button");
+        GameManager.Instance.GameStart();
+        UIManager.Instance.PopUIPanel();
     }
 }

@@ -6,36 +6,33 @@ public class UIManager : SingletonMono<UIManager>
 {
     [SerializeField]
     public UIConfig uIConfig;
-    private MonoBehaviour monoBehaviour;
     private Stack<BasePanel> panelStack = new Stack<BasePanel>();
-    private Dictionary<PanelType, BasePanel> panelDict = new Dictionary<PanelType, BasePanel>();
-    private IDisposable _timerTask;
+    private Dictionary<UIPanelType, BasePanel> panelDict = new Dictionary<UIPanelType, BasePanel>();
 
     private void Awake()
     {
         Init();
-        RegisterPanel(PanelType.LoadPanel);
-        RegisterPanel(PanelType.SettingPanel);
-        RegisterPanel(PanelType.StartPanel);
-        RegisterPanel(PanelType.PausePanel);
-        RegisterPanel(PanelType.EndPanel);
+        RegisterPanel(UIPanelType.LoadPanel);
+        RegisterPanel(UIPanelType.SettingPanel);
+        RegisterPanel(UIPanelType.StartPanel);
+        RegisterPanel(UIPanelType.PausePanel);
+        RegisterPanel(UIPanelType.EndPanel);
     }
 
     private void Start()
     {
-        PushPanel(PanelType.LoadPanel);
+        PushUIPanel(UIPanelType.StartPanel);
     }
 
     public void Init()
     {
-        monoBehaviour = this;
     }
 
-    public BasePanel GetPanel(PanelType panelType)
+    public BasePanel GetPanel(UIPanelType panelType)
     {
         if (panelDict == null)
         {
-            panelDict = new Dictionary<PanelType, BasePanel>();
+            panelDict = new Dictionary<UIPanelType, BasePanel>();
         }
         BasePanel panel = null;
         if (!panelDict.TryGetValue(panelType, out panel) || panel == null)
@@ -72,7 +69,7 @@ public class UIManager : SingletonMono<UIManager>
         }
     }
 
-    public void PushPanel(PanelType panelType, bool isTop = true, params object[] Params)
+    public void PushUIPanel(UIPanelType panelType, bool isTop = true, params object[] Params)
     {
         if (panelStack == null)
         {
@@ -97,11 +94,12 @@ public class UIManager : SingletonMono<UIManager>
         panelStack.Push(panel);
     }
 
-    public void PopPanel()
+    public void PopUIPanel()
     {
         if (panelStack == null)
+        {
             panelStack = new Stack<BasePanel>();
-
+        }
         if (panelStack.Count <= 0) return;
 
         BasePanel panel;
@@ -119,11 +117,11 @@ public class UIManager : SingletonMono<UIManager>
     {
         for (int i = 0; i < panelStack.Count; i++)
         {
-            PopPanel();
+            PopUIPanel();
         }
     }
 
-    public void RegisterPanel(PanelType panelType)
+    public void RegisterPanel(UIPanelType panelType)
     {
         GetPanel(panelType);
     }

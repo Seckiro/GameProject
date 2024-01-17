@@ -24,9 +24,6 @@ public class FloorSystem : SystemBase
 
     private List<FloorBase> _listLifeFloor = new List<FloorBase>();
 
-    /// <summary>
-    /// 加载用到的地板类型和概率
-    /// </summary>
     public override void SystemInit()
     {
         _gameGradeDataTable = ResManager.Instance.Load<GameGradeDataTable>("Assets/Res/Configs/GameGradeDataTable.asset");

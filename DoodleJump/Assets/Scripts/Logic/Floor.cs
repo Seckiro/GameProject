@@ -5,7 +5,7 @@ public class Floor : MonoBehaviour
 {
     public FloorObjectPool floorObjectPool = new FloorObjectPool();
     public FloorType floorType = FloorType.Normal;
-    public Vector2 vector2Force = new Vector2(0, 100);
+    public Vector2 vector2Force = new Vector2(0, 10);
     private Animator _animator;
     private EdgeCollider2D _edgeCollider2D;
     private void Awake()

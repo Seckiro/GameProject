@@ -1,4 +1,4 @@
-public enum PanelType
+public enum UIPanelType
 {
     None = 0,
     LoadPanel,

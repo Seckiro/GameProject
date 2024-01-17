@@ -97,7 +97,9 @@
     <Compile Include="Assets\Scripts\UI\SettingPanel\ISettingPanel.cs" />
     <Compile Include="Assets\Scripts\UI\LoadPanel\LoadPanelLogic.cs" />
     <Compile Include="Assets\Scripts\Logic\GenerateFloor.cs" />
+    <Compile Include="Assets\Scripts\Logic\CharacterSystem.cs" />
     <Compile Include="Assets\Scripts\Common\GameObjectExtend.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character.cs" />
     <Compile Include="Assets\Scripts\Logic\Boundary.cs" />
     <Compile Include="Assets\Scripts\UI\LoadPanel\ILoadPanel.cs" />
     <Compile Include="Assets\Scripts\UI\LoadPanel\LoadPanel.cs" />

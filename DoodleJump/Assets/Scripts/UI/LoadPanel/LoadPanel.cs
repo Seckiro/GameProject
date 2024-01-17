@@ -25,7 +25,7 @@ public class LoadPanel : BasePanel
 
 
 
-        uiManager.PushPanel(PanelType.StartPanel);
+        uiManager.PushUIPanel(UIPanelType.StartPanel);
         OnEixt();
     }
 
