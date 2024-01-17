@@ -13,8 +13,12 @@ public class UIManager : SingletonMono<UIManager>
 
     private void Awake()
     {
-        init();
+        Init();
         RegisterPanel(PanelType.LoadPanel);
+        RegisterPanel(PanelType.SettingPanel);
+        RegisterPanel(PanelType.StartPanel);
+        RegisterPanel(PanelType.PausePanel);
+        RegisterPanel(PanelType.EndPanel);
     }
 
     private void Start()
@@ -22,7 +26,7 @@ public class UIManager : SingletonMono<UIManager>
         PushPanel(PanelType.LoadPanel);
     }
 
-    public void init()
+    public void Init()
     {
         monoBehaviour = this;
     }
@@ -30,25 +34,28 @@ public class UIManager : SingletonMono<UIManager>
     public BasePanel GetPanel(PanelType panelType)
     {
         if (panelDict == null)
+        {
             panelDict = new Dictionary<PanelType, BasePanel>();
-
-        BasePanel panel;
+        }
+        BasePanel panel = null;
         if (!panelDict.TryGetValue(panelType, out panel) || panel == null)
         {
-            GameObject insPanel = uIConfig.transform.Find(panelType.ToString()).gameObject;
+            GameObject insPanel = uIConfig.uiCanvasTransform.Find(panelType.ToString()).gameObject;
 
             if (insPanel != null)
             {
-                panel = System.Activator.CreateInstance(Type.GetType(panelType.ToString())) as BasePanel;
+                panel = Activator.CreateInstance(Type.GetType(panelType.ToString())) as BasePanel;
                 if (panel == null)
                 {
                     return null;
                 }
                 else
                 {
-                    panel.gameObjectPanel = insPanel;
+                    panel.panelObj = insPanel;
+                    panel.panelRoot = insPanel.transform;
                     panel.uiManager = this;
                     panel.init();
+
                     panelDict.Add(panelType, panel);
                     return panel;
                 }
@@ -71,18 +78,20 @@ public class UIManager : SingletonMono<UIManager>
         {
             panelStack = new Stack<BasePanel>();
         }
-        BasePanel panel;
+
+        BasePanel panel = null;
 
         if (panelStack.Count > 0)
         {
             panel = panelStack.Peek();
             panel.OnPause();
         }
+
         panel = GetPanel(panelType);
 
         if (isTop)
         {
-            panel.gameObjectPanel.transform.SetAsLastSibling();
+            panel.panelObj.transform.SetAsLastSibling();
         }
         panel.OnEnter(Params);
         panelStack.Push(panel);
@@ -97,7 +106,7 @@ public class UIManager : SingletonMono<UIManager>
 
         BasePanel panel;
         panel = panelStack.Pop();
-        panel.gameObjectPanel.transform.SetAsFirstSibling();
+        panel.panelObj.transform.SetAsFirstSibling();
         panel.OnEixt();
 
         if (panelStack.Count <= 0) return;
@@ -123,7 +132,7 @@ public class UIManager : SingletonMono<UIManager>
     {
         foreach (var item in panelStack)
         {
-            item.Tick();
+            item.Update();
         }
     }
 }

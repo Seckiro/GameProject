@@ -1,5 +1,9 @@
 public enum PanelType
 {
     None = 0,
-    LoadPanel = 1,
+    LoadPanel,
+    StartPanel,
+    EndPanel,
+    SettingPanel,
+    PausePanel,
 }

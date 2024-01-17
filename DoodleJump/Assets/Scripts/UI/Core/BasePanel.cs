@@ -2,16 +2,20 @@ using UnityEngine;
 
 public class BasePanel
 {
+    private bool isDebug = false;
+    private bool _isPause = false;
+
     public float panelSpeed = 1;
     public UIManager uiManager;
     public CanvasGroup canvasGroup;
-    public GameObject gameObjectPanel;
-
+    public GameObject panelObj;
+    public Transform panelRoot;
     public virtual void init()
     {
-        canvasGroup = gameObjectPanel.GetComponent<CanvasGroup>();
+        canvasGroup = panelObj.GetComponent<CanvasGroup>();
         canvasGroup.blocksRaycasts = false;
         canvasGroup.alpha = 0.0f;
+        panelObj.SetActive(false);
     }
 
     /// <summary>
@@ -20,6 +24,8 @@ public class BasePanel
     /// <param name="Params"></param>
     public virtual void OnEnter(params object[] Params)
     {
+        panelObj.SetActive(true);
+        canvasGroup.alpha = 1.0f;
         canvasGroup.blocksRaycasts = true;
     }
     /// <summary>
@@ -27,14 +33,14 @@ public class BasePanel
     /// </summary>
     public virtual void OnPause()
     {
-        canvasGroup.blocksRaycasts = false;
+        _isPause = true;
     }
     /// <summary>
     /// 面板点击事件回复恢复
     /// </summary>
     public virtual void OnResume()
     {
-        canvasGroup.blocksRaycasts = true;
+        _isPause = false;
     }
     /// <summary>
     /// 面板退出
@@ -42,7 +48,18 @@ public class BasePanel
     public virtual void OnEixt()
     {
         canvasGroup.blocksRaycasts = false;
+        canvasGroup.alpha = 0f;
+        panelObj.SetActive(false);
     }
+
+    public virtual void Update()
+    {
+        if (!_isPause)
+        {
+            Tick();
+        }
+    }
+
     /// <summary>
     /// 等价UpDate,用于每一帧的更新
     /// </summary>
@@ -53,6 +70,9 @@ public class BasePanel
 
     public virtual void RegisterInterfae(IUIBase iUIBase)
     {
-        Debug.Log("------------" + iUIBase.RegisterInfo() + "------------");
+        if (isDebug)
+        {
+            Debug.Log($"--{iUIBase.GetType().Name} --");
+        }
     }
 }

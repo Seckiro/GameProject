@@ -8,7 +8,7 @@ public class LoadPanel : BasePanel
     /// <summary>
     /// µÈ¼ÛÓÚLoadPanelLogic
     /// </summary>
-    ILoadPanel iLoadPanel;
+    ILoadPanel iLoadPanel = null;
 
     public override void init()
     {
@@ -19,7 +19,14 @@ public class LoadPanel : BasePanel
     public override void OnEnter(params object[] Params)
     {
         base.OnEnter(Params);
-        gameObjectPanel.SetActive(true);
+        panelObj.SetActive(true);
+
+
+
+
+
+        uiManager.PushPanel(PanelType.StartPanel);
+        OnEixt();
     }
 
     public override void OnEixt()
@@ -29,7 +36,7 @@ public class LoadPanel : BasePanel
 
     public override void Tick()
     {
-        if (gameObjectPanel.activeSelf)
+        if (panelObj.activeSelf)
         {
 
         }

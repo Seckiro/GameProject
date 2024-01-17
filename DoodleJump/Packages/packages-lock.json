@@ -1,5 +1,19 @@
 {
   "dependencies": {
+    "com.cysharp.messagepipe": {
+      "version": "https://github.com/Cysharp/MessagePipe.git?path=src/MessagePipe.Unity/Assets/Plugins/MessagePipe",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "5d3b2b8e06ba97a7e11525942b34e3247d1f0064"
+    },
+    "com.cysharp.messagepipe.vcontainer": {
+      "version": "https://github.com/Cysharp/MessagePipe.git?path=src/MessagePipe.Unity/Assets/Plugins/MessagePipe.VContainer",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "5d3b2b8e06ba97a7e11525942b34e3247d1f0064"
+    },
     "com.unity.2d.animation": {
       "version": "9.0.3",
       "depth": 1,
@@ -93,6 +107,19 @@
         "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.cn"
+    },
+    "com.unity.addressables": {
+      "version": "file:com.unity.addressables@1.21.18",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.scriptablebuildpipeline": "1.21.20",
+        "com.unity.modules.assetbundle": "1.0.0",
+        "com.unity.modules.imageconversion": "1.0.0",
+        "com.unity.modules.jsonserialize": "1.0.0",
+        "com.unity.modules.unitywebrequest": "1.0.0",
+        "com.unity.modules.unitywebrequestassetbundle": "1.0.0"
+      }
     },
     "com.unity.ai.navigation": {
       "version": "1.1.4",
@@ -192,6 +219,13 @@
       "dependencies": {},
       "url": "https://packages.unity.cn"
     },
+    "com.unity.nuget.mono-cecil": {
+      "version": "1.11.4",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.cn"
+    },
     "com.unity.render-pipelines.core": {
       "version": "14.0.8",
       "depth": 1,
@@ -213,6 +247,13 @@
         "com.unity.render-pipelines.core": "14.0.8",
         "com.unity.shadergraph": "14.0.8"
       }
+    },
+    "com.unity.scriptablebuildpipeline": {
+      "version": "1.21.20",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.cn"
     },
     "com.unity.searcher": {
       "version": "4.9.2",
@@ -280,6 +321,15 @@
         "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.cn"
+    },
+    "jp.hadashikick.vcontainer": {
+      "version": "https://github.com/hadashiA/VContainer.git?path=VContainer/Assets/VContainer#1.13.2",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.nuget.mono-cecil": "1.10.1"
+      },
+      "hash": "af7bd4ecabaf6ea3f9e58ecc4352dd5296e5ef29"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",

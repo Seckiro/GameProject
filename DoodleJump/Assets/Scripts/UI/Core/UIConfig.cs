@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class UIConfig
 {
     public Camera camera;
-    public Transform transform;
+    public Transform uiCanvasTransform;
     public EventSystem eventSystem;
-    public RectTransform rectTransform;
+    public RectTransform uiCanvasRectTransform;
 }
