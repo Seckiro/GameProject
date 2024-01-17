@@ -41,7 +41,8 @@ public class FloorSystem : SystemBase
 
     public override void SystemUpdata()
     {
-
+        CreateFloor();
+        RecoveryFloor();
     }
 
     public override void SystemDestroy()
@@ -50,9 +51,6 @@ public class FloorSystem : SystemBase
         RecoveryFloor();
     }
 
-    /// <summary>
-    /// 根据距离生成地板
-    /// </summary>
     private void CreateFloor()
     {
         if (_currentHeight < Camera.main.transform.position.y + _generateRange)
