@@ -2,7 +2,11 @@ using UnityEngine;
 
 public abstract class SystemBase : ISystemBase
 {
+    public abstract bool SystemActive { get; set; }
+
     public virtual void SystemInit() { }
+
+    public virtual void SystemReady() { }
 
     public virtual void SystemStart() { }
 

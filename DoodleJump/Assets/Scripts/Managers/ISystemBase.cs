@@ -1,8 +1,12 @@
-public interface ISystemBase : ISystemInit, ISystemStart, ISystemUpdata, ISystemEnd, ISystemDestroy, ISystemQuit { }
+public interface ISystemBase : ISystemInit, ISystemReady, ISystemStart, ISystemUpdata, ISystemEnd, ISystemDestroy, ISystemQuit { }
 
 public interface ISystemInit
 {
     void SystemInit();
+}
+public interface ISystemReady
+{
+    void SystemReady();
 }
 public interface ISystemStart
 {

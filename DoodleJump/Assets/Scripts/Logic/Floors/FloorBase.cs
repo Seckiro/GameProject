@@ -15,6 +15,7 @@ public abstract class FloorBase : MonoBehaviour
             _floorObjectPool = value;
         }
     }
+
     private FloorObjectPool _floorObjectPool;
 
     public virtual void OnDepress(GameObject gameObject, Rigidbody2D rigidbody2D) { }

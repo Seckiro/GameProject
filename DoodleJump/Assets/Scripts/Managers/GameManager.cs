@@ -1,15 +1,12 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UniRx;
 
 public class GameManager : SingletonMono<GameManager>
 {
+    private IDisposable _UpdataTask;
 
-    IDisposable _UpdataTask;
-    private List<ISystemBase> _listSystem = new List<ISystemBase>();
-
+    private Dictionary<Type, ISystemBase> _dictSystem = new Dictionary<Type, ISystemBase>();
 
     private void Awake()
     {
@@ -18,12 +15,32 @@ public class GameManager : SingletonMono<GameManager>
 
     private void Start()
     {
-        SystemInit();
+        GameInit();
+    }
+
+    public T GetSystem<T>() where T : class, ISystemBase, new()
+    {
+        if (_dictSystem.TryGetValue(typeof(T), out ISystemBase systemBase))
+        {
+            return systemBase as T;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public void GameInit()
+    {
+        ForeachDictSystem(item =>
+        {
+            item.SystemInit();
+        });
     }
 
     public void GameStart()
     {
-        ForeachListSystem(item =>
+        ForeachDictSystem(item =>
         {
             item.SystemStart();
         });
@@ -33,36 +50,59 @@ public class GameManager : SingletonMono<GameManager>
 
     public void GameUpdate()
     {
-        ForeachListSystem(item =>
+        ForeachDictSystem(item =>
         {
             item.SystemUpdata();
         });
     }
 
-    private void SystemRegister()
+    public void GameEnd()
     {
-        _listSystem.Add(new CharacterSystem());
-        _listSystem.Add(new BoundarySystem());
-        _listSystem.Add(new FloorSystem());
-
+        ForeachDictSystem(item =>
+        {
+            item.SystemEnd();
+        });
+        _UpdataTask?.Dispose();
+        _UpdataTask = null;
     }
 
-    private void SystemInit()
+    public void GameDestroy()
     {
-        ForeachListSystem(item =>
+        ForeachDictSystem(item =>
         {
-            item.SystemInit();
+            item.SystemDestroy();
         });
     }
 
-    private void ForeachListSystem(Action<ISystemBase> action)
+    public void GameQuit()
     {
-        foreach (ISystemBase item in _listSystem)
+        ForeachDictSystem(item =>
         {
-            action?.Invoke(item);
+            item.SystemQuit();
+        });
+    }
+
+    private void ForeachDictSystem(Action<ISystemBase> action)
+    {
+        foreach (var item in _dictSystem)
+        {
+            action?.Invoke(item.Value);
         }
     }
 
+    private void ResgisterSystem(ISystemBase systemBase)
+    {
+        if (systemBase != null)
+        {
+            _dictSystem[systemBase.GetType()] = systemBase;
+        }
+    }
 
-
+    private void SystemRegister()
+    {
+        ResgisterSystem(new CharacterSystem());
+        ResgisterSystem(new BoundarySystem());
+        ResgisterSystem(new FloorSystem());
+        ResgisterSystem(new CameraFollowSystem());
+    }
 }

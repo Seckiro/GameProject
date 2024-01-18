@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,26 @@ public class Character : MonoBehaviour
     SpriteRenderer _spriteRenderer;
     BoxCollider2D _boxCollider2D;
     Rigidbody2D _rigidbody2D;
+
+    internal void CharacterDestroy()
+    {
+        throw new NotImplementedException();
+    }
+
+    internal void CharacterEnd()
+    {
+        throw new NotImplementedException();
+    }
+
+    internal void CharacterStart()
+    {
+        throw new NotImplementedException();
+    }
+
+    internal void CharacterUpdate()
+    {
+        throw new NotImplementedException();
+    }
 
     void Awake()
     {

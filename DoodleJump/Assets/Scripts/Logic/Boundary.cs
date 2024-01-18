@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class Boundary : MonoBehaviour
 {
-
     private SpriteRenderer spriteRenderer;
+    private BoxCollider2D _boundaryBox;
+
+    private void Awake()
+    {
+        _boundaryBox = this.GetComponent<BoxCollider2D>();
+    }
 
     private void Update()
     {
-
         Vector3 cameraPosition = Camera.main.transform.position;
         this.transform.position = new Vector3(cameraPosition.x, cameraPosition.y, 0);
     }
@@ -17,11 +21,15 @@ public class Boundary : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         // ◊Û”“‘º ¯
-        GameObject gameObject = collision.gameObject;
-        if (gameObject.CompareTag("Player") && gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D rigidbody2D))
+        GameObject player = collision.gameObject;
+        if (GameUitility.PlayerTagDetermine(player))
         {
-            Vector3 vector3 = gameObject.transform.position;
-            gameObject.transform.position = new Vector3(-vector3.x * 0.9f, vector3.y, vector3.z);
+            Vector3 vector3 = player.transform.position;
+            player.transform.position = new Vector3(-vector3.x * 0.9f, vector3.y, vector3.z);
+        }
+        if ((this.transform.localPosition.y - (_boundaryBox.size.y / 2)) > player.transform.localPosition.y)
+        {
+            Debug.Log("À¿Õˆ");
         }
     }
 }
@@ -35,6 +43,8 @@ public class BoundarySystem : SystemBase
     private BoxCollider2D _deathBox;
 
     private GameObject _boundaryObj;
+
+    public override bool SystemActive { get; set; }
 
     public override void SystemInit()
     {

@@ -61,12 +61,13 @@
     <Compile Include="Assets\ThirdPlugins\UniTask\Runtime\Internal\PlayerLoopRunner.cs" />
     <Compile Include="Assets\ThirdPlugins\UniTask\Runtime\Internal\RuntimeHelpersAbstraction.cs" />
     <Compile Include="Assets\ThirdPlugins\UniTask\Runtime\Internal\MinimumQueue.cs" />
-    <Compile Include="Assets\ThirdPlugins\UniTask\Runtime\UnityWebRequestException.cs" />
     <Compile Include="Assets\ThirdPlugins\UniTask\Runtime\UniTask.WhenAll.cs" />
+    <Compile Include="Assets\ThirdPlugins\UniTask\Runtime\UnityWebRequestException.cs" />
     <Compile Include="Assets\ThirdPlugins\UniTask\Runtime\UniTaskSynchronizationContext.cs" />
     <Compile Include="Assets\ThirdPlugins\UniTask\Runtime\UniTaskCompletionSource.cs" />
     <Compile Include="Assets\ThirdPlugins\UniTask\Runtime\EnumeratorAsyncExtensions.cs" />
     <Compile Include="Assets\ThirdPlugins\UniTask\Runtime\UnityAsyncExtensions.AsyncGPUReadback.cs" />
+    <Compile Include="Assets\ThirdPlugins\UniTask\Runtime\UnityAwaitableExtensions.cs" />
     <Compile Include="Assets\ThirdPlugins\UniTask\Runtime\UnityAsyncExtensions.AssetBundleRequestAllAssets.cs" />
     <Compile Include="Assets\ThirdPlugins\UniTask\Runtime\AsyncLazy.cs" />
     <Compile Include="Assets\ThirdPlugins\UniTask\Runtime\UniTask.WhenAny.cs" />

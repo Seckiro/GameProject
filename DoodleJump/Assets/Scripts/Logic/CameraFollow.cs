@@ -1,54 +1,92 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UniRx;
-using Cysharp.Threading.Tasks;
 using System;
-using UnityEngine.Events;
+using UniRx;
+using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public float smoothSpeed;
-    public GameObject character;
+    private bool _followState = false;
 
-    private Vector3 velocity;
-    private IDisposable _updataTask = null;
-    private IntReactiveProperty _cameraReactiveY;
-    public event Action<int> UpdataHighEvent;
+    private float _smoothSpeed = 0.0f;
 
-    private void Init(GameObject character, float smoothSpeed)
+    private Vector3 _startPos = Vector3.zero;
+
+    private Character _followCharacter;
+
+    private Transform _followCharacterObj;
+
+    private IDisposable _followTask = null;
+
+    public bool FollowState => _followState;
+
+    private void Awake()
     {
-        this.character = character;
-        this.smoothSpeed = smoothSpeed;
-
-        _cameraReactiveY = new IntReactiveProperty(0);
-        _cameraReactiveY.Subscribe(UpdataHigh);
+        _startPos = this.transform.position;
     }
 
-    private void Start()
+    public void SetFollowInit(float smoothSpeed)
     {
-        _updataTask?.Dispose();
-        _updataTask = Observable.EveryLateUpdate().Subscribe(_ => OnUpdate());
+        SetStartPos();
+        this._smoothSpeed = smoothSpeed;
     }
 
-    private void End()
+    public void SetFollowObj(Character followCharacter)
     {
-        _cameraReactiveY.Dispose();
+        _followCharacter = followCharacter;
+        _followCharacterObj = _followCharacter.transform;
     }
 
-    private void OnUpdate()
+    public void SetFollowStart()
     {
-        if (character.transform.position.y > this.transform.position.y)
+        SetStartPos();
+        SetFollowState(true);
+    }
+
+    public void SetFollowEnd()
+    {
+        SetFollowState(false);
+        this._followCharacter = null;
+        this._smoothSpeed = 0.0f;
+    }
+
+    private void SetStartPos()
+    {
+        this.transform.position = _startPos;
+    }
+
+    private void SetFollowState(bool state)
+    {
+        _followState = state;
+        if (_followState)
         {
-            Vector3 cameraPos = this.transform.position;
-            Vector3 target = new Vector3(0, character.transform.position.y, -10);
-            this.transform.position = Vector3.SmoothDamp(cameraPos, target, ref velocity, smoothSpeed * Time.deltaTime);
-            _cameraReactiveY.Value = (int)this.transform.position.y;
+            _followTask?.Dispose();
+            _followTask = Observable.EveryLateUpdate().Subscribe(_ =>
+            {
+                if (_followCharacter.transform.position.y > this.transform.position.y)
+                {
+                    FollowMove();
+                }
+            });
+        }
+        else
+        {
+            float deathFollowTime = 2.0f;
+            _followTask?.Dispose();
+            _followTask = Observable.EveryLateUpdate().Subscribe(_ =>
+            {
+                deathFollowTime -= Time.deltaTime;
+                FollowMove();
+                if (deathFollowTime <= 0)
+                {
+                    _followTask?.Dispose();
+                }
+            });
         }
     }
 
-    private void UpdataHigh(int hight)
+    private void FollowMove()
     {
-        UpdataHighEvent?.Invoke(hight);
+        Vector3 velocity = Vector3.zero;
+        Vector3 cameraPos = this.transform.position;
+        this.transform.position = Vector3.SmoothDamp(cameraPos, new Vector3(0, _followCharacterObj.position.y, -10), ref velocity, _smoothSpeed * Time.deltaTime);
     }
 }

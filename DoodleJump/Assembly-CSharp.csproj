@@ -70,6 +70,7 @@
     <Compile Include="Assets\Scripts\Logic\Floors\FloorBase.cs" />
     <Compile Include="Assets\Scripts\Managers\ISystemBase.cs" />
     <Compile Include="Assets\Scripts\UI\PausePanel\IPausePanel.cs" />
+    <Compile Include="Assets\Scripts\Logic\CameraFollowSystem.cs" />
     <Compile Include="Assets\ThirdPlugins\SerializableDictionary\SerializableDictionary.cs" />
     <Compile Include="Assets\Scripts\Logic\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\Managers\ResManager.cs" />
@@ -84,11 +85,13 @@
     <Compile Include="Assets\Scripts\Managers\CharacterManager.cs" />
     <Compile Include="Assets\Scripts\UI\PausePanel\PausePanelLogic.cs" />
     <Compile Include="Assets\Scripts\UI\StartPanel\StartPanelLogic.cs" />
+    <Compile Include="Assets\Scripts\Logic\ScoreSystem.cs" />
     <Compile Include="Assets\Scripts\UI\StartPanel\IStartPanel.cs" />
     <Compile Include="Assets\Scripts\UI\EndPanel\IEndPanel.cs" />
     <Compile Include="Assets\Scripts\Logic\Floors\NormalFloor.cs" />
     <Compile Include="Assets\Res\InputConfig\CharacterControls.cs" />
     <Compile Include="Assets\Scripts\Logic\CharacterInput.cs" />
+    <Compile Include="Assets\Scripts\Logic\Score.cs" />
     <Compile Include="Assets\Scripts\UI\Core\IUIBase.cs" />
     <Compile Include="Assets\Scripts\Common\Singleton.cs" />
     <Compile Include="Assets\Scripts\UI\SettingPanel\SettingPanel.cs" />
@@ -107,6 +110,7 @@
     <Compile Include="Assets\Scripts\Logic\Floor.cs" />
     <Compile Include="Assets\Scripts\UI\Core\UIManager.cs" />
     <Compile Include="Assets\Scripts\Character\CharacterStatus.cs" />
+    <Compile Include="Assets\Scripts\Logic\GameUitility.cs" />
     <Compile Include="Assets\Scripts\Managers\FloorPoolManager.cs" />
     <Compile Include="Assets\Scripts\Character\CharacterAnimationTable.cs" />
     <Compile Include="Assets\ThirdPlugins\SerializableDictionary\Example\SerializableDictionaryExample.cs" />

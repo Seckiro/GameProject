@@ -24,6 +24,8 @@ public class FloorSystem : SystemBase
 
     private List<FloorBase> _listLifeFloor = new List<FloorBase>();
 
+    public override bool SystemActive { get; set; }
+
     public override void SystemInit()
     {
         _gameGradeDataTable = ResManager.Instance.Load<GameGradeDataTable>("Assets/Res/Configs/GameGradeDataTable.asset");
