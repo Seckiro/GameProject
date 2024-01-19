@@ -58,9 +58,9 @@
     <Analyzer Include="D:\Program Files\Unity Editor\2022.3.8f1c1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Editor\PreviewBuiltInUIResEditorWindow.cs" />
     <Compile Include="Assets\ThirdPlugins\SerializableDictionary\Editor\SerializableDictionaryPropertyDrawer.cs" />
     <Compile Include="Assets\ThirdPlugins\SerializableDictionary\Example\Editor\UserSerializableDictionaryPropertyDrawers.cs" />
-    <Compile Include="Assets\Editor\BuiltInResourcesWindow.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Library\PackageCache\com.unity.collab-proxy@2.0.7\Lib\Editor\PlasticSCM\Localization\clientcommon.ja.txt" />
