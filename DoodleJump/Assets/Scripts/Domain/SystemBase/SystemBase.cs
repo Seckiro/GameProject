@@ -10,7 +10,7 @@ public abstract class SystemBase : ISystemBase
 
     public virtual void SystemStart() { }
 
-    public virtual void SystemUpdata() { }
+    public virtual void SystemUpdate() { }
 
     public virtual void SystemEnd() { }
 

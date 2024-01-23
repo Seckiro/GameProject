@@ -14,7 +14,7 @@ public interface ISystemStart
 }
 public interface ISystemUpdata
 {
-    void SystemUpdata();
+    void SystemUpdate();
 }
 public interface ISystemEnd
 {

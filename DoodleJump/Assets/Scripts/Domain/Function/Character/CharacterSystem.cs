@@ -24,7 +24,7 @@ public class CharacterSystem : SystemBase
         _currentCharacter.CharacterStart();
     }
 
-    public override void SystemUpdata()
+    public override void SystemUpdate()
     {
         _currentCharacter.CharacterUpdate();
     }

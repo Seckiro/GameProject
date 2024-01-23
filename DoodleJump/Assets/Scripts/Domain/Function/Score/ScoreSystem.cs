@@ -41,7 +41,7 @@ public class ScoreSystem : SystemBase
         _gradeUpdateEvent?.Invoke(_currentGrade);
     }
 
-    public override void SystemUpdata()
+    public override void SystemUpdate()
     {
         _currentScore = (int)_followCameraObj.position.y;
         _scoreUpdateEvent?.Invoke(_currentScore);

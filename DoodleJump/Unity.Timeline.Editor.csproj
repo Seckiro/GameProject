@@ -257,9 +257,9 @@
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.5\Editor\Window\TimelineWindow_PlaybackControls.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.5\Editor\treeview\Drawers\InfiniteTrackDrawer.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.5\Editor\Manipulators\Trim\TrimItemModeRipple.cs" />
+    <Compile Include="Library\PackageCache\com.unity.timeline@1.7.5\Editor\Window\TimelineWindow_HeaderGui.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.5\Editor\Animation\AnimationClipCurveCache.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.5\Editor\Window\ViewModel\ScriptableObjectViewPrefs.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline@1.7.5\Editor\Window\TimelineWindow_HeaderGui.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.5\Editor\Extensions\AnimationTrackExtensions.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.5\Editor\Utilities\AnimatedParameterCache.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.5\Editor\Manipulators\EditModeInputHandler.cs" />

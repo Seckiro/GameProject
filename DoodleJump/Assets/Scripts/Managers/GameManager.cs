@@ -52,7 +52,7 @@ public class GameManager : SingletonMono<GameManager>
     {
         ForeachDictSystem(item =>
         {
-            item.SystemUpdata();
+            item.SystemUpdate();
         });
     }
 

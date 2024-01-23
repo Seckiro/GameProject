@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 /// <summary>
 /// 生成类型 生成概率
 /// </summary>
-public class FloorPoolManager : IDisposable
+public class FloorPoolSystem : SystemBase
 {
     private int _tatal = 0;
 
@@ -16,9 +16,9 @@ public class FloorPoolManager : IDisposable
     private Dictionary<FloorType, FloorObjectPool> _dictFloorPoolOfType = new Dictionary<FloorType, FloorObjectPool>();
     private Dictionary<Vector2, FloorType> _dictFloorTypeCreateProbability = new Dictionary<Vector2, FloorType>();
 
-    private FloorPoolManager() { }
+    private FloorPoolSystem() { }
 
-    public FloorPoolManager(Dictionary<FloorType, int> dictFloorPoolOfType)
+    public FloorPoolSystem(Dictionary<FloorType, int> dictFloorPoolOfType)
     {
         SetGenerateGradeProbability(dictFloorPoolOfType);
     }

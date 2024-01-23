@@ -14,7 +14,7 @@ public class FloorSystem : SystemBase
 
     private Vector3 _floorLsatPos = Vector3.zero;
 
-    private FloorPoolManager _floorObjectPool = null;
+    private FloorPoolSystem _floorObjectPool = null;
 
     private GameGradeDataTable _gameGradeDataTable = null;
     private GameGradeDataAsset _gameGradeDataAsset = null;
@@ -27,7 +27,7 @@ public class FloorSystem : SystemBase
     {
         _gameGradeDataTable = ResManager.Instance.Load<GameGradeDataTable>("Assets/Res/Configs/GameGradeDataTable.asset");
         _gameGradeDataAsset = _gameGradeDataTable.gameGradeAsset[0];
-        _floorObjectPool = new FloorPoolManager(_gameGradeDataAsset._dictFloorTypeProbability);
+        _floorObjectPool = new FloorPoolSystem(_gameGradeDataAsset._dictFloorTypeProbability);
     }
 
     public override void SystemReady()
@@ -40,7 +40,7 @@ public class FloorSystem : SystemBase
         _currentHeight = Camera.main.transform.position.y - _generateRange;
     }
 
-    public override void SystemUpdata()
+    public override void SystemUpdate()
     {
         CreateFloor();
         RecoveryFloor();

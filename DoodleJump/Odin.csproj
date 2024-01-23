@@ -704,8 +704,8 @@
     <Compile Include="Assets\ThirdPlugins\Sirenix\Assemblies\Sirenix.Serialization\Core\Misc\CustomSerializationPolicy.cs" />
     <Compile Include="Assets\ThirdPlugins\Sirenix\Assemblies\Sirenix.Utilities\Misc\DeepReflection.cs" />
     <Compile Include="Assets\ThirdPlugins\Sirenix\Assemblies\Sirenix.OdinInspector.Editor\Drawers\Value Drawers\DoubleDrawer.cs" />
-    <Compile Include="Assets\ThirdPlugins\Sirenix\Assemblies\Sirenix.OdinInspector.Editor\Misc\Type Search\TypeMatchIndexingRule.cs" />
     <Compile Include="Assets\ThirdPlugins\Sirenix\Assemblies\Sirenix.OdinInspector.Editor\Core\Resolvers\Misc\ResolverUtilities.cs" />
+    <Compile Include="Assets\ThirdPlugins\Sirenix\Assemblies\Sirenix.OdinInspector.Editor\Misc\Type Search\TypeMatchIndexingRule.cs" />
     <Compile Include="Assets\ThirdPlugins\Sirenix\Assemblies\Sirenix.Utilities.Editor\Expressions\ExpressionUtility.cs" />
     <Compile Include="Assets\ThirdPlugins\Sirenix\Assemblies\Sirenix.Serialization.Config\DefaultLoggers.cs" />
     <Compile Include="Assets\ThirdPlugins\Sirenix\Assemblies\Sirenix.OdinInspector.Editor\Modules\Definitions\UIElementsModuleDefinition.cs" />
@@ -803,8 +803,8 @@
     <Compile Include="Assets\ThirdPlugins\Sirenix\Assemblies\Sirenix.OdinInspector.Editor\Examples\Attributes\DetailedInfoBoxExample.cs" />
     <Compile Include="Assets\ThirdPlugins\Sirenix\Assemblies\Sirenix.OdinInspector.Attributes\Attributes\VerticalGroupAttribute.cs" />
     <Compile Include="Assets\ThirdPlugins\Sirenix\Assemblies\Sirenix.OdinInspector.Editor\Examples\Attributes\SuppressInvalidAttributeErrorExample.cs" />
-    <Compile Include="Assets\ThirdPlugins\Sirenix\Assemblies\Sirenix.OdinInspector.Editor\Core\State Updaters\GroupVisibilityStateUpdater.cs" />
     <Compile Include="Assets\ThirdPlugins\Sirenix\Assemblies\Sirenix.Utilities.Editor\Expressions\ASTEmitter.cs" />
+    <Compile Include="Assets\ThirdPlugins\Sirenix\Assemblies\Sirenix.OdinInspector.Editor\Core\State Updaters\GroupVisibilityStateUpdater.cs" />
     <Compile Include="Assets\ThirdPlugins\Sirenix\Assemblies\Sirenix.OdinInspector.Attributes\Attributes\DisableInPrefabsAttribute.cs" />
     <Compile Include="Assets\ThirdPlugins\Sirenix\Assemblies\Sirenix.OdinInspector.Editor\OdinSelectors\GenericSelectorItem.cs" />
     <Compile Include="Assets\ThirdPlugins\Sirenix\Assemblies\Sirenix.OdinInspector.Editor\Misc\Type Search\TypeMatchRule.cs" />
@@ -854,8 +854,8 @@
     <Compile Include="Assets\ThirdPlugins\Sirenix\Assemblies\Sirenix.OdinInspector.Attributes\Attributes\DisableInPrefabInstancesAttribute.cs" />
     <Compile Include="Assets\ThirdPlugins\Sirenix\Assemblies\Sirenix.OdinInspector.Attributes\Attributes\DisableContextMenuAttribute.cs" />
     <Compile Include="Assets\ThirdPlugins\Sirenix\Assemblies\Sirenix.Utilities.Editor\Misc\TextureUtilities.cs" />
-    <Compile Include="Assets\ThirdPlugins\Sirenix\Assemblies\Sirenix.OdinInspector.Editor\Misc\AllowGUIEnabledForReadonlyAttribute.cs" />
     <Compile Include="Assets\ThirdPlugins\Sirenix\Assemblies\Sirenix.Utilities.Editor\Expressions\SyntaxException.cs" />
+    <Compile Include="Assets\ThirdPlugins\Sirenix\Assemblies\Sirenix.OdinInspector.Editor\Misc\AllowGUIEnabledForReadonlyAttribute.cs" />
     <Compile Include="Assets\ThirdPlugins\Sirenix\Assemblies\Sirenix.Utilities.Editor\GUI\GUITable.cs" />
     <Compile Include="Assets\ThirdPlugins\Sirenix\Assemblies\Sirenix.Serialization\Unity Integration\Formatters\CoroutineFormatter.cs" />
     <Compile Include="Assets\ThirdPlugins\Sirenix\Assemblies\Sirenix.OdinInspector.Editor\Examples\SyntaxHighlighter.cs" />
