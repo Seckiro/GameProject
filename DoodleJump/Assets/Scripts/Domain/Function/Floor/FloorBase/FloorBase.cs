@@ -6,7 +6,7 @@ public abstract class FloorBase : MonoBehaviour
 
     public FloorObjectPool FloorObjectPool
     {
-        private get
+        get
         {
             return _floorObjectPool;
         }
@@ -16,7 +16,7 @@ public abstract class FloorBase : MonoBehaviour
         }
     }
 
-    private FloorObjectPool _floorObjectPool;
+    private FloorObjectPool _floorObjectPool = null;
 
     public virtual void OnDepress(GameObject gameObject, Rigidbody2D rigidbody2D) { }
 

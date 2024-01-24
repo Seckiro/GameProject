@@ -17,6 +17,7 @@ public class ScoreSystem : SystemBase
     private event Action<int> _gradeUpdateEvent;
 
     public override bool SystemActive { get; set; }
+    public int CurrentGrade { get => _currentGrade; set => _currentGrade = value; }
 
     public event Action<int> ScoreUpdateEvent { add => _scoreUpdateEvent += value; remove => _scoreUpdateEvent -= value; }
 
