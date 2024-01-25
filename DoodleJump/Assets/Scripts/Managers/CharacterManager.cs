@@ -15,7 +15,6 @@ public class CharacterManager : Singleton<CharacterManager>
     {
         // ¶ÁÈ¡ÅäÖÃÊı¾İ
         _curCharacter = Resources.Load<GameObject>("Prefabs/Character");
-        _curCharacter.AddComponent<CharacterInput>();
     }
 
     /// <summary>

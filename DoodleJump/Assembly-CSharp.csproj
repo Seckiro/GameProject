@@ -99,7 +99,7 @@
     <Compile Include="Assets\Scripts\UI\Panels\LoadPanel\ILoadPanel.cs" />
     <Compile Include="Assets\Scripts\Common\Singleton.cs" />
     <Compile Include="Assets\Scripts\UI\Panels\StartPanel\StartPanelLogic.cs" />
-    <Compile Include="Assets\Scripts\Domain\Function\Character\CharacterControl.cs" />
+    <Compile Include="Assets\Scripts\Domain\Function\Character\CharacterData\CharacterAnimationTable.cs" />
     <Compile Include="Assets\Scripts\Domain\SystemBase\SystemBase.cs" />
     <Compile Include="Assets\Scripts\UI\Panels\StartPanel\StartPanel.cs" />
     <Compile Include="Assets\Scripts\Common\GameObjectExtend.cs" />
@@ -109,7 +109,6 @@
     <Compile Include="Assets\Scripts\Utility\GameUitility.cs" />
     <Compile Include="Assets\Scripts\Managers\UIManager.cs" />
     <Compile Include="Assets\Scripts\Domain\Model\GameGradeDataTable.cs" />
-    <Compile Include="Assets\Scripts\Domain\Function\Character\CharacterAnimationTable.cs" />
     <Compile Include="Assets\Scripts\Domain\UIPanelBase\IUIPanelBase.cs" />
     <Compile Include="Assets\ThirdPlugins\SerializableDictionary\Example\SerializableDictionaryExample.cs" />
     <Compile Include="Assets\Scripts\Domain\Function\Character\CharacterInput\TouchManager.cs" />
