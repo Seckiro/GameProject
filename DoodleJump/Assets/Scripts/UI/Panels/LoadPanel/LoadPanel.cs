@@ -10,9 +10,9 @@ public class LoadPanel : UIPanelBase
     /// </summary>
     ILoadPanel iLoadPanel = null;
 
-    public override void init()
+    public override void Init()
     {
-        base.init();
+        base.Init();
         RegisterInterfae(new LoadPanelLogic());
     }
 

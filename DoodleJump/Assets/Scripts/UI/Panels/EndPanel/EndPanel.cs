@@ -10,9 +10,9 @@ public class EndPanel : UIPanelBase
     /// </summary>
     IEndPanel iEndPanel;
 
-    public override void init()
+    public override void Init()
     {
-        base.init();
+        base.Init();
         RegisterInterfae(new EndPanelLogic());
     }
 

@@ -93,9 +93,7 @@ namespace CircularScrollView
 
         public virtual void Init(Action<GameObject, int> callBack)
         {
-
-
-                Init(callBack, null);
+            Init(callBack, null);
         }
         public virtual void Init(Action<GameObject, int> callBack, Action<GameObject, int> onClickCallBack, Action<int, bool, GameObject> onButtonClickCallBack)
         {
@@ -107,7 +105,6 @@ namespace CircularScrollView
         }
         public virtual void Init(Action<GameObject, int> callBack, Action<GameObject, int> onClickCallBack)
         {
-
             DisposeAll();
 
             m_FuncCallBackFunc = callBack;
@@ -177,7 +174,7 @@ namespace CircularScrollView
         //检查 Anchor 是否正确
         private void CheckAnchor(RectTransform rectTrans)
         {
-            if(m_Direction == EDirection.Vertical)
+            if (m_Direction == EDirection.Vertical)
             {
                 if (!((rectTrans.anchorMin == new Vector2(0, 1) && rectTrans.anchorMax == new Vector2(0, 1)) ||
                          (rectTrans.anchorMin == new Vector2(0, 1) && rectTrans.anchorMax == new Vector2(1, 1))))
@@ -236,7 +233,7 @@ namespace CircularScrollView
             m_MaxIndex = -1;
 
             //-> 计算 Content 尺寸
-            if(m_Direction == EDirection.Vertical)
+            if (m_Direction == EDirection.Vertical)
             {
                 float contentSize = (m_Spacing + m_CellObjectHeight) * Mathf.CeilToInt((float)num / m_Row);
                 m_ContentHeight = contentSize;
@@ -325,7 +322,7 @@ namespace CircularScrollView
                 float rowPos = 0; //计算每排里面的cell 坐标
 
                 // * -> 计算每个Cell坐标
-                if(m_Direction == EDirection.Vertical)
+                if (m_Direction == EDirection.Vertical)
                 {
                     pos = m_CellObjectHeight * Mathf.FloorToInt(i / m_Row) + m_Spacing * Mathf.FloorToInt(i / m_Row);
                     rowPos = m_CellObjectWidth * (i % m_Row) + m_Spacing * (i % m_Row);
@@ -428,7 +425,7 @@ namespace CircularScrollView
         protected bool IsOutRange(float pos)
         {
             Vector3 listP = m_ContentRectTrans.anchoredPosition;
-            if(m_Direction == EDirection.Vertical)
+            if (m_Direction == EDirection.Vertical)
             {
                 if (pos + listP.y > m_CellObjectHeight || pos + listP.y < -rectTrans.rect.height)
                 {
@@ -530,7 +527,7 @@ namespace CircularScrollView
         {
             float normalizedPos = m_Direction == EDirection.Vertical ? m_ScrollRect.verticalNormalizedPosition : m_ScrollRect.horizontalNormalizedPosition;
 
-            if(m_Direction == EDirection.Vertical)
+            if (m_Direction == EDirection.Vertical)
             {
                 if (m_ContentHeight - rectTrans.rect.height < 10)
                 {

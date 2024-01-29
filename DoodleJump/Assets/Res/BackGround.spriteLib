@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Library:
-  - m_Name: Body
-    m_Hash: 999990412
+  - m_Name: front
+    m_Hash: 1056662262
     m_CategoryList: []
     m_OverrideEntries:
     - m_Name: 1
@@ -27,10 +27,15 @@ MonoBehaviour:
       m_Sprite: {fileID: 0}
       m_FromMain: 0
       m_SpriteOverride: {fileID: 0}
+    - m_Name: 3
+      m_Hash: 768773787
+      m_Sprite: {fileID: 0}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 0}
     m_FromMain: 0
-    m_EntryOverrideCount: 2
-  - m_Name: Weapon
-    m_Hash: 782213840
+    m_EntryOverrideCount: 3
+  - m_Name: back
+    m_Hash: 768524599
     m_CategoryList: []
     m_OverrideEntries:
     - m_Name: 1
@@ -43,8 +48,13 @@ MonoBehaviour:
       m_Sprite: {fileID: 0}
       m_FromMain: 0
       m_SpriteOverride: {fileID: 0}
+    - m_Name: 3
+      m_Hash: 768773787
+      m_Sprite: {fileID: 0}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 0}
     m_FromMain: 0
-    m_EntryOverrideCount: 2
+    m_EntryOverrideCount: 3
   m_PrimaryLibraryGUID: 
-  m_ModificationHash: 638421240782615934
+  m_ModificationHash: 638421617689925840
   m_Version: 1

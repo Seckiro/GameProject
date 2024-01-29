@@ -17,9 +17,9 @@ public class StartPanel : UIPanelBase
 
 
 
-    public override void init()
+    public override void Init()
     {
-        base.init();
+        base.Init();
         RegisterInterfae(new StartPanelLogic());
 
         _btnStart = panelRoot.Find<Button>("BtnStart").AddListener(_iStartPanel.Start);

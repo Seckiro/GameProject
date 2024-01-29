@@ -1,13 +1,13 @@
 public class SettingPanelLogic : ISettingPanel
 {
-    public void init()
+    public void Init()
     {
 
     }
 
     public string RegisterInfo()
     {
-        init();
+        Init();
         return "SettingPanelLogic";
     }
 }

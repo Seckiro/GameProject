@@ -10,9 +10,9 @@ public class PausePanel : UIPanelBase
     /// </summary>
     IPausePanel iPausePanel;
 
-    public override void init()
+    public override void Init()
     {
-        base.init();
+        base.Init();
         RegisterInterfae(new PausePanelLogic());
     }
 

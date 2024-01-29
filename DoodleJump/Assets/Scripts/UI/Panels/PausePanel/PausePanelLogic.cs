@@ -1,13 +1,13 @@
 public class PausePanelLogic : IPausePanel
 {
-    public void init()
+    public void Init()
     {
 
     }
 
     public string RegisterInfo()
     {
-        init();
+        Init();
         return "PausePanelLogic";
     }
 }

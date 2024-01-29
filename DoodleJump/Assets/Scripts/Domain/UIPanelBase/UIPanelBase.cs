@@ -10,7 +10,7 @@ public class UIPanelBase
     public CanvasGroup canvasGroup;
     public GameObject panelObj;
     public Transform panelRoot;
-    public virtual void init()
+    public virtual void Init()
     {
         canvasGroup = panelObj.GetComponent<CanvasGroup>();
         canvasGroup.blocksRaycasts = false;
@@ -57,9 +57,10 @@ public class UIPanelBase
 
     public virtual void RegisterInterfae(IUIPanelBase iUIBase)
     {
+        string panelName = iUIBase.RegisterInfo();
         if (isDebug)
         {
-            Debug.Log($"--{iUIBase.GetType().Name} --");
+            Debug.Log($"--{panelName} --");
         }
     }
 }

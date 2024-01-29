@@ -11,6 +11,10 @@ public enum UIPanelType
 
 public static class UIPanelTypeRegister
 {
+    public static void OriginPanel()
+    {
+        UIManager.Instance.PushUIPanel(UIPanelType.ReplacementPanel);
+    }
     public static void RegisterPanel()
     {
         UIManager.Instance.RegisterPanel(UIPanelType.LoadPanel);

@@ -1,13 +1,13 @@
 public class EndPanelLogic : IEndPanel
 {
-    public void init()
+    public void Init()
     {
 
     }
 
     public string RegisterInfo()
     {
-        init();
+        Init();
         return "EndPanelLogic";
     }
 }

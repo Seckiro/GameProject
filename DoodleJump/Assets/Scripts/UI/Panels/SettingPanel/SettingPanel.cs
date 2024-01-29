@@ -10,9 +10,9 @@ public class SettingPanel : UIPanelBase
     /// </summary>
     ISettingPanel iSettingPanel;
 
-    public override void init()
+    public override void Init()
     {
-        base.init();
+        base.Init();
         RegisterInterfae(new SettingPanelLogic());
     }
 

@@ -17,7 +17,7 @@ public class UIManager : SingletonMono<UIManager>
 
     private void Start()
     {
-        PushUIPanel(UIPanelType.StartPanel);
+        UIPanelTypeRegister.OriginPanel();
     }
 
     public void Init()
@@ -47,7 +47,7 @@ public class UIManager : SingletonMono<UIManager>
                     panel.panelObj = insPanel;
                     panel.panelRoot = insPanel.transform;
                     panel.uiManager = this;
-                    panel.init();
+                    panel.Init();
 
                     panelDict.Add(panelType, panel);
                     return panel;

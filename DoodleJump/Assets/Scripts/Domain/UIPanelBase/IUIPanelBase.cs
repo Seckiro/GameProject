@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IUIPanelBase
 {
-    void init();
+    void Init();
 
     string RegisterInfo();
 }

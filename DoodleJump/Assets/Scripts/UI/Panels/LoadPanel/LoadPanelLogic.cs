@@ -1,13 +1,13 @@
 public class LoadPanelLogic : ILoadPanel
 {
-    public void init()
+    public void Init()
     {
 
     }
 
     public string RegisterInfo()
     {
-        init();
+        Init();
         return "LoadPanelLogic";
     }
 }

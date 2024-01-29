@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class StartPanelLogic : IStartPanel
 {
-    public void init()
+    public void Init()
     {
 
     }
 
     public string RegisterInfo()
     {
-        init();
+        Init();
         return "StartPanelLogic";
     }
 
