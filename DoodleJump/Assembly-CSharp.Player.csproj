@@ -65,6 +65,7 @@
     <Compile Include="Assets\Scripts\Domain\Function\Floor\FloorType\NormalFloor.cs" />
     <Compile Include="Assets\Scripts\Domain\Function\Floor\FloorPool\FloorPoolControl.cs" />
     <Compile Include="Assets\Scripts\Domain\Function\Floor\FloorSystem.cs" />
+    <Compile Include="Assets\UGUICircularScrollView\Scripts\ExpandTipsCircularScrollView.cs" />
     <Compile Include="Assets\Scripts\Domain\Function\CameraFollow\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\Domain\Function\Character\CharacterDisplay.cs" />
     <Compile Include="Assets\Scripts\Domain\UIPanelBase\UIPanelBase.cs" />
@@ -74,22 +75,29 @@
     <Compile Include="Assets\Scripts\UI\Core\UIManagerConfig.cs" />
     <Compile Include="Assets\Scripts\UI\Panels\StartPanel\IStartPanel.cs" />
     <Compile Include="Assets\Scripts\Domain\Function\Character\CharacterStatus.cs" />
+    <Compile Include="Assets\UGUICircularScrollView\Scripts\ExpandCircularScrollView.cs" />
     <Compile Include="Assets\Scripts\UI\Panels\SettingPanel\SettingPanelLogic.cs" />
+    <Compile Include="Assets\Scripts\UI\Panels\ReplacementPanel\IReplacementPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Panels\PausePanel\PausePanel.cs" />
+    <Compile Include="Assets\UGUICircularScrollView\TestOtherScrollTypeDemo.cs" />
+    <Compile Include="Assets\Scripts\UI\Panels\ReplacementPanel\ReplacementPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Panels\LoadPanel\LoadPanelLogic.cs" />
     <Compile Include="Assets\Scripts\Domain\Function\Floor\FloorBase\FloorType.cs" />
     <Compile Include="Assets\Scripts\Domain\Function\Score\ScoreSystem.cs" />
     <Compile Include="Assets\Scripts\Domain\Function\Score\Score.cs" />
     <Compile Include="Assets\Scripts\UI\Panels\PausePanel\IPausePanel.cs" />
     <Compile Include="Assets\ThirdPlugins\SerializableDictionary\SerializableDictionary.cs" />
+    <Compile Include="Assets\UGUICircularScrollView\TestScrollDemo.cs" />
     <Compile Include="Assets\Scripts\Managers\ResManager.cs" />
     <Compile Include="Assets\Scripts\Domain\Function\Character\Character.cs" />
     <Compile Include="Assets\Scripts\Common\SingletonMono.cs" />
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
+    <Compile Include="Assets\UGUICircularScrollView\Scripts\UICircularScrollView.cs" />
     <Compile Include="Assets\Scripts\UI\Panels\PausePanel\PausePanelLogic.cs" />
     <Compile Include="Assets\ThirdPlugins\SerializableDictionary\Example\UserSerializableDictionaries.cs" />
     <Compile Include="Assets\Scripts\Domain\Function\Floor\FloorBase\FloorBase.cs" />
     <Compile Include="Assets\Scripts\Managers\CharacterManager.cs" />
+    <Compile Include="Assets\UGUICircularScrollView\Scripts\FlipPageCircularScrollView.cs" />
     <Compile Include="Assets\Scripts\UI\Panels\LoadPanel\LoadPanel.cs" />
     <Compile Include="Assets\Scripts\Domain\Function\Character\CharacterSystem.cs" />
     <Compile Include="Assets\Scripts\Domain\Function\Character\CharacterInput\CharacterInput.cs" />
@@ -112,6 +120,7 @@
     <Compile Include="Assets\Scripts\Domain\UIPanelBase\IUIPanelBase.cs" />
     <Compile Include="Assets\ThirdPlugins\SerializableDictionary\Example\SerializableDictionaryExample.cs" />
     <Compile Include="Assets\Scripts\Domain\Function\Character\CharacterInput\TouchManager.cs" />
+    <Compile Include="Assets\Scripts\UI\Panels\ReplacementPanel\ReplacementPanelLogic.cs" />
     <Compile Include="Assets\Scripts\UI\Panels\SettingPanel\ISettingPanel.cs" />
   </ItemGroup>
   <ItemGroup>

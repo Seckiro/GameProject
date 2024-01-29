@@ -17,6 +17,7 @@ public class UIManager : SingletonMono<UIManager>
         RegisterPanel(UIPanelType.StartPanel);
         RegisterPanel(UIPanelType.PausePanel);
         RegisterPanel(UIPanelType.EndPanel);
+        RegisterPanel(UIPanelType.ReplacementPanel);
     }
 
     private void Start()

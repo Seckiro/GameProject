@@ -6,4 +6,5 @@ public enum UIPanelType
     EndPanel,
     SettingPanel,
     PausePanel,
+    ReplacementPanel,
 }

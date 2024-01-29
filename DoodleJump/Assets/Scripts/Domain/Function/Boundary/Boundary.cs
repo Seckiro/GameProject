@@ -1,6 +1,7 @@
 using System;
 using UniRx;
 using UnityEngine;
+using UnityEngine.U2D.Animation;
 
 public class Boundary : MonoBehaviour
 {
@@ -11,20 +12,28 @@ public class Boundary : MonoBehaviour
     private Camera _followCamera;
     private Transform _followCameraObj;
     private BoxCollider2D _boundaryBox;
-    private SpriteRenderer _spriteRenderer;
+    private SpriteLibrary _spriteLibrary;
+    private SpriteResolver _spriteResolver;
 
     public bool BoundaryActive => _boundaryBox.enabled;
 
     private void Awake()
     {
         _boundaryBox = this.GetComponent<BoxCollider2D>();
-        _spriteRenderer = this.GetComponent<SpriteRenderer>();
+        _spriteLibrary = this.GetComponent<SpriteLibrary>();
+        _spriteResolver = this.GetComponent<SpriteResolver>();
         _startPos = this.transform.position;
     }
 
-    public void SetBackGround(Sprite sprite)
+
+    public void SetSprite(string name)
     {
-        _spriteRenderer.sprite = sprite;
+        _spriteResolver.SetCategoryAndLabel("Boundary", name);
+    }
+
+    public void SetSprite(SpriteLibraryAsset spriteLibraryAsset)
+    {
+        _spriteLibrary.spriteLibraryAsset = spriteLibraryAsset;
     }
 
     public void SetFollowCamera(Camera followCamera)

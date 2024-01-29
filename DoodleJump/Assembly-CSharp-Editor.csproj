@@ -59,8 +59,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Editor\PreviewBuiltInUIResEditorWindow.cs" />
+    <Compile Include="Assets\UGUICircularScrollView\Editor\FlipPageCircularScrollViewEditor.cs" />
     <Compile Include="Assets\ThirdPlugins\SerializableDictionary\Editor\SerializableDictionaryPropertyDrawer.cs" />
     <Compile Include="Assets\ThirdPlugins\SerializableDictionary\Example\Editor\UserSerializableDictionaryPropertyDrawers.cs" />
+    <Compile Include="Assets\UGUICircularScrollView\Editor\ExpandTipsCircularScrollViewEditor.cs" />
+    <Compile Include="Assets\UGUICircularScrollView\Editor\UICircularScrollViewEditor.cs" />
+    <Compile Include="Assets\UGUICircularScrollView\Editor\ExpandCircularScrollViewEditor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Library\PackageCache\com.unity.collab-proxy@2.0.7\Lib\Editor\PlasticSCM\Localization\clientcommon.ja.txt" />
