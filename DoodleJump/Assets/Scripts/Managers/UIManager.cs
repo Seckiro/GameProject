@@ -12,12 +12,7 @@ public class UIManager : SingletonMono<UIManager>
     private void Awake()
     {
         Init();
-        RegisterPanel(UIPanelType.LoadPanel);
-        RegisterPanel(UIPanelType.SettingPanel);
-        RegisterPanel(UIPanelType.StartPanel);
-        RegisterPanel(UIPanelType.PausePanel);
-        RegisterPanel(UIPanelType.EndPanel);
-        RegisterPanel(UIPanelType.ReplacementPanel);
+        UIPanelTypeRegister.RegisterPanel();
     }
 
     private void Start()
