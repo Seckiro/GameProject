@@ -118,6 +118,7 @@
     <Compile Include="Assets\Scripts\Managers\UIManager.cs" />
     <Compile Include="Assets\Scripts\Domain\Model\GameGradeDataTable.cs" />
     <Compile Include="Assets\Scripts\Domain\UIPanelBase\IUIPanelBase.cs" />
+    <Compile Include="Assets\Scripts\Utility\SpriteSystem.cs" />
     <Compile Include="Assets\ThirdPlugins\SerializableDictionary\Example\SerializableDictionaryExample.cs" />
     <Compile Include="Assets\Scripts\Domain\Function\Character\CharacterInput\TouchManager.cs" />
     <Compile Include="Assets\Scripts\UI\Panels\ReplacementPanel\ReplacementPanelLogic.cs" />
