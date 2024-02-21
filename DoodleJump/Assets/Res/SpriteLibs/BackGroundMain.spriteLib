@@ -1,0 +1,116 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5e6fedc2472449cead18ef23b5cb30d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Library:
+  - m_Name: front
+    m_Hash: 1056662262
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: 1
+      m_Hash: 64810935
+      m_Sprite: {fileID: 0}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: 0}
+    - m_Name: 2
+      m_Hash: 450215437
+      m_Sprite: {fileID: 0}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: 0}
+    - m_Name: 3
+      m_Hash: 768773787
+      m_Sprite: {fileID: 0}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: 0}
+    m_FromMain: 1
+    m_EntryOverrideCount: 0
+  - m_Name: back
+    m_Hash: 768524599
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: 1
+      m_Hash: 64810935
+      m_Sprite: {fileID: 0}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: 0}
+    - m_Name: 2
+      m_Hash: 450215437
+      m_Sprite: {fileID: 0}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: 0}
+    - m_Name: 3
+      m_Hash: 768773787
+      m_Sprite: {fileID: 0}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: 0}
+    m_FromMain: 1
+    m_EntryOverrideCount: 0
+  - m_Name: BackGround
+    m_Hash: 882487990
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: 1
+      m_Hash: 64810935
+      m_Sprite: {fileID: 21300000, guid: 5186e27a14e9a664e847c5ee202d7bbf, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 21300000, guid: 5186e27a14e9a664e847c5ee202d7bbf, type: 3}
+    - m_Name: 2
+      m_Hash: 450215437
+      m_Sprite: {fileID: 21300000, guid: 1d4c8fa1b1efb97438b436e43ab6b03f, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 21300000, guid: 1d4c8fa1b1efb97438b436e43ab6b03f, type: 3}
+    - m_Name: 3
+      m_Hash: 768773787
+      m_Sprite: {fileID: 21300000, guid: 0d13ca22570b3f84daf62b6b025163d9, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 21300000, guid: 0d13ca22570b3f84daf62b6b025163d9, type: 3}
+    - m_Name: 4
+      m_Hash: 867572536
+      m_Sprite: {fileID: 21300000, guid: e20e6e1e87217c54c8f84787ccca84d3, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 21300000, guid: e20e6e1e87217c54c8f84787ccca84d3, type: 3}
+    - m_Name: 5
+      m_Hash: 78719918
+      m_Sprite: {fileID: 21300000, guid: 8e748dfe8e2b97140a99d10fcbb92651, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 21300000, guid: 8e748dfe8e2b97140a99d10fcbb92651, type: 3}
+    - m_Name: 6
+      m_Hash: 498629140
+      m_Sprite: {fileID: 21300000, guid: 3c82c6bc83d1aff4ab7211957cf284fe, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 21300000, guid: 3c82c6bc83d1aff4ab7211957cf284fe, type: 3}
+    - m_Name: 7
+      m_Hash: 717179522
+      m_Sprite: {fileID: 21300000, guid: 5db3bb5a7c2cd6e4c8d9e4f5722d55ae, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 21300000, guid: 5db3bb5a7c2cd6e4c8d9e4f5722d55ae, type: 3}
+    - m_Name: 8
+      m_Hash: 973100819
+      m_Sprite: {fileID: 21300000, guid: 91e0846b013ea894b91937f37cb45862, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 21300000, guid: 91e0846b013ea894b91937f37cb45862, type: 3}
+    - m_Name: 9
+      m_Hash: 218589061
+      m_Sprite: {fileID: 21300000, guid: 0bfdf2f177e057b49a4e0e88694c3b78, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 21300000, guid: 0bfdf2f177e057b49a4e0e88694c3b78, type: 3}
+    - m_Name: 10
+      m_Hash: 559752673
+      m_Sprite: {fileID: 21300000, guid: 2f10e7afececd2646b614b1a6773c119, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 21300000, guid: 2f10e7afececd2646b614b1a6773c119, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 10
+  m_PrimaryLibraryGUID: 06993db4f9bfa5c4f95a22fbfaa326d2
+  m_ModificationHash: 638441121975081771
+  m_Version: 1

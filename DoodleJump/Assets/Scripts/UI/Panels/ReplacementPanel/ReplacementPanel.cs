@@ -7,10 +7,10 @@ using UnityEngine.UI;
 
 public class ReplacementPanel : UIPanelBase
 {
-    IReplacementPanel iReplacementPanel;
+    private IReplacementPanel iReplacementPanel;
 
-    UICircularScrollView _characterScrollView;
-    UICircularScrollView _backGroundScrollView;
+    private UICircularScrollView _characterScrollView;
+    private UICircularScrollView _backGroundScrollView;
 
     public override void Init()
     {

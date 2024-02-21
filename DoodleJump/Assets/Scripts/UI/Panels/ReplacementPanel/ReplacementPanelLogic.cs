@@ -33,8 +33,7 @@ public class ReplacementPanelLogic : IReplacementPanel
 
     public void BackGroundSpritInit()
     {
-        _backGroundAsset = ResManager.Instance.Load<SpriteLibraryAsset>("Assets/Res/BackGroundMain.spriteLib");
-        Debug.Log(_backGroundAsset.name + _backGroundAsset == null);
+        _backGroundAsset = ResManager.Instance.Load<SpriteLibraryAsset>("Assets/Res/SpriteLibs/BackGroundMain.spriteLib");
         foreach (var item in _backGroundAsset.GetCategoryLabelNames("BackGround"))
         {
             _listBackGround.Add(item);
@@ -43,11 +42,13 @@ public class ReplacementPanelLogic : IReplacementPanel
 
     public void BackGroundCallBack(GameObject gameObject, int index)
     {
-        var image = gameObject.transform.Find("Image").GetComponent<Image>();
+        Image image = gameObject.transform.Find("Image").GetComponent<Image>();
 
-        gameObject.transform.Find("Text1").GetComponent<Text>().text = index.ToString();
+        var sparite = _backGroundAsset.GetSprite("BackGround", _listBackGround[index - 1]);
 
-        image.sprite = _backGroundAsset.GetSprite("BackGround", _listBackGround[index - 1]);
+        image.sprite = sparite;
+
+        gameObject.transform.Find("Text1").GetComponent<Text>().text = sparite.name;
     }
 
     public void BackGroundClick(GameObject gameObject, int index)

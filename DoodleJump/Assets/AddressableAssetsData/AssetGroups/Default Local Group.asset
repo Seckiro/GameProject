@@ -33,12 +33,12 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7b9d3d4f329ee564397a064f10c29f37
-    m_Address: Assets/Res/BackGroundMain.spriteLib
+    m_Address: Assets/Res/SpriteLibs/BackGroundMain.spriteLib
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 06993db4f9bfa5c4f95a22fbfaa326d2
-    m_Address: Assets/Res/BackGround.spriteLib
+    m_Address: Assets/Res/SpriteLibs/BackGround.spriteLib
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
