@@ -25,13 +25,12 @@ public class Boundary : MonoBehaviour
         _startPos = this.transform.position;
     }
 
-
     public void SetSprite(string name)
     {
-        _spriteResolver.SetCategoryAndLabel("Boundary", name);
+        _spriteResolver.SetCategoryAndLabel(BoundarySystem.SpriteLibraryAssetName, name);
     }
 
-    public void SetSprite(SpriteLibraryAsset spriteLibraryAsset)
+    public void SetSpriteLibraryAsset(SpriteLibraryAsset spriteLibraryAsset)
     {
         _spriteLibrary.spriteLibraryAsset = spriteLibraryAsset;
     }

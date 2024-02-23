@@ -20,21 +20,10 @@ public class ReplacementPanelLogic : IReplacementPanel
 
     }
 
-    public void CharacterClick(GameObject gameObject, int index)
-    {
-
-    }
-
-    public void CharacterButtonClick(int index, bool active, GameObject gameObject)
-    {
-
-    }
-
-
     public void BackGroundSpritInit()
     {
-        _backGroundAsset = ResManager.Instance.Load<SpriteLibraryAsset>("Assets/Res/SpriteLibs/BackGroundMain.spriteLib");
-        foreach (var item in _backGroundAsset.GetCategoryLabelNames("BackGround"))
+        _backGroundAsset = GameManager.Instance.GetSystem<BoundarySystem>().SpriteLibraryAsset;
+        foreach (var item in _backGroundAsset.GetCategoryLabelNames(BoundarySystem.SpriteLibraryAssetName))
         {
             _listBackGround.Add(item);
         }
@@ -42,30 +31,25 @@ public class ReplacementPanelLogic : IReplacementPanel
 
     public void BackGroundCallBack(GameObject gameObject, int index)
     {
+        var sparite = _backGroundAsset.GetSprite(BoundarySystem.SpriteLibraryAssetName, _listBackGround[index - 1]);
+
+        Text text = gameObject.transform.Find("Text1").GetComponent<Text>();
+        text.text = sparite.name;
+
         Image image = gameObject.transform.Find("Image").GetComponent<Image>();
-
-        var sparite = _backGroundAsset.GetSprite("BackGround", _listBackGround[index - 1]);
-
         image.sprite = sparite;
 
-        gameObject.transform.Find("Text1").GetComponent<Text>().text = sparite.name;
-    }
+        Button button = gameObject.GetComponent<Button>();
+        button.AddListener(() =>
+        {
+            GameManager.Instance.GetSystem<BoundarySystem>().SetBoundarySprite(text.text);
+        });
 
-    public void BackGroundClick(GameObject gameObject, int index)
-    {
-        Debug.Log($"BackGroundClick:{index}BackGroundClick+{gameObject.name}");
-    }
-
-
-    public void BackGroundButtonClick(int index, bool active, GameObject gameObject)
-    {
-        Debug.Log($"BackGroundClick:{index}BackGroundClick+{gameObject.name}");
     }
 
     public string RegisterInfo()
     {
         Init();
-        Debug.Log("ReplacementPanelLogic");
         return this.GetType().ToString();
     }
 }

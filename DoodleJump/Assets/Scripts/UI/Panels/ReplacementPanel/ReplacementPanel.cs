@@ -19,20 +19,15 @@ public class ReplacementPanel : UIPanelBase
 
         //_characterScrollView = panelRoot.Find("Character/ScrollView").GetComponent<UICircularScrollView>();
         //_characterScrollView.Init(
-        // iReplacementPanel.CharacterCallBack,
-        // iReplacementPanel.CharacterClick,
-        // iReplacementPanel.CharacterButtonClick);
+        // iReplacementPanel.CharacterCallBack);
         //_characterScrollView.ShowList(10);
         //_characterScrollView.gameObject.SetActive(false);
 
 
         _backGroundScrollView = panelRoot.Find("BackGround/ScrollView").GetComponent<UICircularScrollView>();
         _backGroundScrollView.Init(
-            iReplacementPanel.BackGroundCallBack,
-            iReplacementPanel.BackGroundClick,
-            iReplacementPanel.BackGroundButtonClick);
+            iReplacementPanel.BackGroundCallBack);
         _backGroundScrollView.ShowList(iReplacementPanel.ListBackGroundCount);
-        Debug.Log("ListBackGroundCount:" + iReplacementPanel.ListBackGroundCount);
         //_backGroundScrollView.gameObject.SetActive(false);
     }
 

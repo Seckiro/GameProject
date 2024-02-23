@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UniRx;
+using UnityEngine;
 
 public class GameManager : SingletonMono<GameManager>
 {
@@ -11,11 +12,15 @@ public class GameManager : SingletonMono<GameManager>
     private void Awake()
     {
         SystemRegister();
+
+        GameInit();
+
+        UIManager.Instance.Init();
     }
 
     private void Start()
     {
-        GameInit();
+        Debug.Log("GameStart");
     }
 
     public T GetSystem<T>() where T : class, ISystemBase, new()
@@ -24,10 +29,7 @@ public class GameManager : SingletonMono<GameManager>
         {
             return systemBase as T;
         }
-        else
-        {
-            return null;
-        }
+        return null;
     }
 
     public void GameInit()
@@ -100,9 +102,9 @@ public class GameManager : SingletonMono<GameManager>
 
     private void SystemRegister()
     {
-        ResgisterSystem(new CharacterSystem());
+        //ResgisterSystem(new CharacterSystem());
         ResgisterSystem(new BoundarySystem());
-        ResgisterSystem(new FloorSystem());
-        ResgisterSystem(new CameraFollowSystem());
+        //ResgisterSystem(new FloorSystem());
+        //ResgisterSystem(new CameraFollowSystem());
     }
 }

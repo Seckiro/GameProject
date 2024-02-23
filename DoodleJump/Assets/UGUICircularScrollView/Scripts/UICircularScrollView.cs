@@ -52,8 +52,19 @@ namespace CircularScrollView
         public float m_Spacing = 0f; //间距
         public GameObject m_CellGameObject; //指定的cell
 
+        /// <summary>
+        /// 刷新列表数据回调
+        /// </summary>
         protected Action<GameObject, int> m_FuncCallBackFunc;
+
+        /// <summary>
+        /// 
+        /// </summary>
         protected Action<GameObject, int> m_FuncOnClickCallBack;
+
+        /// <summary>
+        /// 
+        /// </summary>
         protected Action<int, bool, GameObject> m_FuncOnButtonClickCallBack;
 
         protected RectTransform rectTrans;

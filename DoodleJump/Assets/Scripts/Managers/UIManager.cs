@@ -9,19 +9,10 @@ public class UIManager : SingletonMono<UIManager>
     private Stack<UIPanelBase> panelStack = new Stack<UIPanelBase>();
     private Dictionary<UIPanelType, UIPanelBase> panelDict = new Dictionary<UIPanelType, UIPanelBase>();
 
-    private void Awake()
-    {
-        Init();
-        UIPanelTypeRegister.RegisterPanel();
-    }
-
-    private void Start()
-    {
-        UIPanelTypeRegister.OriginPanel();
-    }
-
     public void Init()
     {
+        UIPanelTypeRegister.RegisterPanel();
+        UIPanelTypeRegister.OriginPanel();
     }
 
     public UIPanelBase GetPanel(UIPanelType panelType)

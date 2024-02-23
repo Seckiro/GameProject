@@ -1,15 +1,28 @@
 using UnityEngine;
+using UnityEngine.U2D.Animation;
 
 
 public class BoundarySystem : SystemBase
 {
+    public static string SpriteLibraryAssetName = "BackGround";
+    public static string SpriteLibraryAssetPath = "Assets/Res/SpriteLibs/BackGroundMain.spriteLib";
+
     private Boundary _boundary;
+    private SpriteLibraryAsset _spriteLibraryAsset;
 
     public override bool SystemActive { get; set; }
 
+    public SpriteLibraryAsset SpriteLibraryAsset { get => _spriteLibraryAsset; }
+
     public override void SystemInit()
     {
+        _spriteLibraryAsset = ResManager.Instance.Load<SpriteLibraryAsset>(SpriteLibraryAssetPath);
+
         _boundary = Object.FindObjectOfType<Boundary>();
+        _boundary.SetSpriteLibraryAsset(_spriteLibraryAsset);
+
+        // …Ë÷√ƒ¨»œÕº∆¨
+
     }
 
     public override void SystemReady()
@@ -25,5 +38,10 @@ public class BoundarySystem : SystemBase
     public override void SystemEnd()
     {
         _boundary.SetBoundaryEnd();
+    }
+
+    public void SetBoundarySprite(string name)
+    {
+        _boundary.SetSprite(name);
     }
 }
