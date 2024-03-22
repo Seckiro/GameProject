@@ -4,7 +4,7 @@ using UnityEngine.U2D.Animation;
 
 public class BoundarySystem : SystemBase
 {
-    public static string SpriteLibraryAssetName = "BackGround";
+    public static string SpriteLibraryAssetCategoryName = "BackGround";
     public static string SpriteLibraryAssetPath = "Assets/Res/SpriteLibs/BackGroundMain.spriteLib";
 
     private Boundary _boundary;
@@ -20,9 +20,7 @@ public class BoundarySystem : SystemBase
 
         _boundary = Object.FindObjectOfType<Boundary>();
         _boundary.SetSpriteLibraryAsset(_spriteLibraryAsset);
-
-        // …Ë÷√ƒ¨»œÕº∆¨
-
+        _boundary.Init();
     }
 
     public override void SystemReady()

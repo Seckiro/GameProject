@@ -25,9 +25,36 @@ public class Boundary : MonoBehaviour
         _startPos = this.transform.position;
     }
 
+    public void Init()
+    {
+        LoadSprite();
+    }
+
+    public void LoadSprite()
+    {
+        string key = this.GetType().ToString();
+        if (PlayerPrefs.HasKey(key))
+        {
+            SetSprite(PlayerPrefs.GetString(key));
+        }
+    }
+
+    public void SaveSprite()
+    {
+        PlayerPrefs.SetString(this.GetType().ToString(), _spriteResolver.GetLabel());
+    }
+
+
     public void SetSprite(string name)
     {
-        _spriteResolver.SetCategoryAndLabel(BoundarySystem.SpriteLibraryAssetName, name);
+        if (_spriteResolver.SetCategoryAndLabel(BoundarySystem.SpriteLibraryAssetCategoryName, name))
+        {
+            PlayerPrefs.SetString(this.GetType().ToString(), name);
+        }
+        else
+        {
+            Debug.LogError("_spriteResolver SetSprite Error");
+        }
     }
 
     public void SetSpriteLibraryAsset(SpriteLibraryAsset spriteLibraryAsset)

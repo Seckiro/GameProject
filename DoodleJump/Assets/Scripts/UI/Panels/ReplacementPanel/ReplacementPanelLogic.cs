@@ -23,7 +23,7 @@ public class ReplacementPanelLogic : IReplacementPanel
     public void BackGroundSpritInit()
     {
         _backGroundAsset = GameManager.Instance.GetSystem<BoundarySystem>().SpriteLibraryAsset;
-        foreach (var item in _backGroundAsset.GetCategoryLabelNames(BoundarySystem.SpriteLibraryAssetName))
+        foreach (var item in _backGroundAsset.GetCategoryLabelNames(BoundarySystem.SpriteLibraryAssetCategoryName))
         {
             _listBackGround.Add(item);
         }
@@ -31,7 +31,7 @@ public class ReplacementPanelLogic : IReplacementPanel
 
     public void BackGroundCallBack(GameObject gameObject, int index)
     {
-        var sparite = _backGroundAsset.GetSprite(BoundarySystem.SpriteLibraryAssetName, _listBackGround[index - 1]);
+        var sparite = _backGroundAsset.GetSprite(BoundarySystem.SpriteLibraryAssetCategoryName, _listBackGround[index - 1]);
 
         Text text = gameObject.transform.Find("Text1").GetComponent<Text>();
         text.text = sparite.name;
