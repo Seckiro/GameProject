@@ -1,0 +1,24 @@
+#pragma kernel CSMainParticle
+
+struct ParticleBufferData {
+    float3 pos;
+    float4 color;
+};
+
+float _Time;
+float3 _Pos;
+RWStructuredBuffer<ParticleBufferData> _ParticleBuffer;
+
+[numthreads(10, 10, 10)]
+void CSMainParticle (uint3 groupId : SV_GroupID,uint3 groupThreadId : SV_GroupThreadID,uint3 dispatchThreadId : SV_DispatchThreadID,uint groupIndex : SV_GroupIndex)
+{
+    int index = groupId.x * 1000 + groupIndex;
+    float x = sin(groupIndex)+_Pos.x;
+    float y = sin(groupIndex * 1.2f)+_Pos.y;
+    float3 forward = float3(x,y, -sqrt(1 - x * x - y * y));
+    _ParticleBuffer[index].color = float4 (forward.x,forward.y,cos(groupIndex) * 0.5f + 0.5 , 1);
+    if (_Time > groupId.x)
+    {
+        _ParticleBuffer[index].pos += forward * 0.005f;
+    }
+}

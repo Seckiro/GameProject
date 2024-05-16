@@ -39,6 +39,26 @@
 /DoodleJump/*.csproj
 /DoodleJump/*.vsconfig
 
+####################################################
+
+/URPProject/[Ll]ibrary/
+/URPProject/[Tt]emp/
+/URPProject/[Oo]bj/
+/URPProject/[Bb]uild/
+/URPProject/[Bb]uilds/
+/URPProject/[Ll]ogs/
+/URPProject/[Uu]ser[Ss]ettings/
+/URPProject/[Mm]emoryCaptures/
+/URPProject/[Rr]ecordings/
+/URPProject/[Aa]ssets/Plugins/Editor/JetBrains*
+/URPProject/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
+/URPProject/[Aa]ssets/[Ss]treamingAssets/aa.meta
+/URPProject/[Aa]ssets/[Ss]treamingAssets/aa/*
+
+/URPProject/*.sln
+/URPProject/*.csproj
+/URPProject/*.vsconfig
+
 # Packed Addressables
 
 
