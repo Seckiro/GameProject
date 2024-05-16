@@ -86,25 +86,25 @@ Material:
     - _BumpScale: 1
     - _Cutoff: 0.26
     - _DetailNormalMapScale: 1
-    - _DissolveAmount: 0.502
-    - _DissolveColorPow: 1.18
-    - _DissolveWidth: 0.242
+    - _DissolveAmount: 0.335
+    - _DissolveColorPow: 1.55
+    - _DissolveWidth: 0.668
     - _DstBlend: 0
     - _Frequency: 2.4
-    - _FresnelScale: 0.116
+    - _FresnelScale: 0
     - _Gloss: 52
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _InvWaveLengh: 0.6
-    - _Magnitude: 0.5
+    - _Magnitude: 0
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _ReflectAmount: 0.563
-    - _RefractAmount: 0
-    - _RefractRatio: 0
+    - _ReflectAmount: 0.272
+    - _RefractAmount: 0.337
+    - _RefractRatio: 0.317
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
