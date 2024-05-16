@@ -6,7 +6,7 @@
 		_MainTex("Main Texture", 2D) = "white"
 		_CullMode("Cull Mode (Off=0, Front=1, Back=2)", Float) = 2.0
 	}
-		SubShader
+	SubShader
 	{
 		Tags { "RenderType" = "Opaque" "Queue" = "Geometry"}
 		LOD 100
@@ -17,7 +17,7 @@
 
 		Pass
 		{
-			Tags {"LightMode" = "ForwardBase"}
+			Tags {"LightMode" = "UniversalForward"}
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
@@ -62,5 +62,5 @@
 			ENDCG
 		}
 	}
-		Fallback "VertexLit"
+	Fallback "VertexLit"
 }

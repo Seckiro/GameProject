@@ -44,7 +44,7 @@ Shader "Unlit/TransparentShadowsShader"
 
         Pass 
         { 
-            Tags { "LightMode"="ForwardBase" }
+            Tags { "LightMode"="UniversalForward" }
 
             Cull Off
             ZWrite On
@@ -208,7 +208,7 @@ Shader "Unlit/TransparentShadowsShader"
         
         Pass 
         { 
-            Tags { "LightMode"="ForwardAdd" }
+            Tags { "LightMode"="UniversalForward" }
             
             Blend  One One
             
@@ -302,6 +302,7 @@ Shader "Unlit/TransparentShadowsShader"
             }
             ENDCG
         }
+        
         Pass
         {
             CGPROGRAM

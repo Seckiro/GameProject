@@ -13,7 +13,7 @@ Shader "Unlit/FragmentNormalTexture"
     {
         Tags 
         { 
-            "LightMode"="ForwardBase"
+            "LightMode"="UniversalForward"
         }
 
         Pass

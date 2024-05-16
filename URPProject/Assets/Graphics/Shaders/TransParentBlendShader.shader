@@ -1,6 +1,6 @@
 Shader "Unlit/TransParentBlendShader"
 {
-     Properties
+    Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
         _Color("Color" ,Color )=(1,1,1,1)
@@ -14,8 +14,8 @@ Shader "Unlit/TransParentBlendShader"
         {
             Name "TransParentBlendShaderFront"
 
-            Tags {"LightMode"="ForwardBase"}
-         
+            Tags {"LightMode"="UniversalForward"}
+            
             ZWrite On
             Blend  SrcAlpha OneMinusSrcAlpha
             Cull Front
@@ -85,8 +85,8 @@ Shader "Unlit/TransParentBlendShader"
         {
             Name "TransParentBlendShaderBack"
 
-            Tags {"LightMode"="ForwardBase"}
-         
+            Tags {"LightMode"="UniversalForward"}
+            
             ZWrite On
             Blend  SrcAlpha OneMinusSrcAlpha
             Cull Back

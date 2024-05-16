@@ -14,7 +14,7 @@ Shader"Unlit/ShadowsRenderingShader"
         {
             Name "ShadowsRenderingShaderBase"
 
-            Tags { "LightMode"="ForwardBase" }
+            Tags { "LightMode"="UniversalForward" }
             
             CGPROGRAM
 
@@ -84,7 +84,7 @@ Shader"Unlit/ShadowsRenderingShader"
             
             Name "ShadowsRenderingShaderAdd"
             
-            Tags { "LightMode"="ForwardAdd" }
+            Tags { "LightMode"="UniversalForward" }
             
             Blend One One
             

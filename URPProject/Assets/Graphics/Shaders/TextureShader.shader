@@ -9,13 +9,15 @@ Shader "Unlit/TextureShader"
     }
     SubShader
     {
-        Tags 
-        { 
-            "LightMode"="ForwardBase"
-        }
+
 
         Pass
         {
+            Tags 
+            { 
+                "LightMode"="UniversalForward"
+            }
+            
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag

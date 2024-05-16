@@ -13,7 +13,7 @@ Shader "Unlit/TransParentShader"
         {
             Name "TransParentShader"
 
-            Tags {"LightMode"="ForwardBase"}
+            Tags {"LightMode"="UniversalForward"}
             Cull Off
             ZWrite On
             Blend  SrcAlpha OneMinusSrcAlpha

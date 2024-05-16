@@ -13,7 +13,7 @@ Shader "Unlit/WorldNormalTexture"
     {
         Tags 
         { 
-            "LightMode"="ForwardBase"
+            "LightMode"="UniversalForward"
         }
 
         Pass
