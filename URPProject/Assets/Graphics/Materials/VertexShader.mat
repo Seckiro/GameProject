@@ -2,20 +2,26 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SimpleNormal
-  m_Shader: {fileID: 4800000, guid: 302abf9f945391a47a32db3ae3bb85f1, type: 3}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 4
+  m_Name: VertexShader
+  m_Shader: {fileID: 4800000, guid: 5fd7a9c3fe73d234b9aa9c0461ec05ab, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - _3
+  - '_ENABLENORMAL_ON '
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -55,11 +61,22 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _EnableFeature: 0
+    - _EnableNormal: 0
+    - _EnableNormal2: 0
+    - _EnableNormal3: 0
+    - _EnableNormal4: 0
+    - _EnableTangent: 0
+    - _EnableTexcoord1: 0
+    - _EnableUV: 0
+    - _EnableVertex: 0
+    - _EnableWorldVertex: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
