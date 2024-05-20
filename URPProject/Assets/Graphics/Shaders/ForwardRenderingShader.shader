@@ -45,7 +45,8 @@ Shader "Unlit/ForwardRenderingShader"
 				float3 worldPos : TEXCOORD1;
 			};
 			
-			v2f vert(a2v v) {
+			v2f vert(a2v v) 
+			{
 				v2f o;
 				o.pos = TransformObjectToHClip(v.vertex.xyz);
 				

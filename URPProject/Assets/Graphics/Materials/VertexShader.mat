@@ -68,6 +68,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EnableFeature: 0
+    - _EnableHClipVertex: 0
     - _EnableNormal: 0
     - _EnableNormal2: 0
     - _EnableNormal3: 0
