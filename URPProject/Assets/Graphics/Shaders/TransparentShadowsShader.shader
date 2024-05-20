@@ -58,42 +58,45 @@ Shader "Unlit/TransparentShadowsShader"
             
             #pragma vertex vert
             #pragma fragment frag
+            
             #pragma multi_compile_fwdbase	
-            
-            float _Gloss;
-            float _Alpha;
-            float _Cutoff;
 
-            float _DissolveColorPow;
-            float _DissolveAmount;
-            float _DissolveWidth;
-            fixed4 _DissolveFristColor;
-            fixed4 _DissolveSecondColor;
+            CBUFFER_START(UnityPerMaterial)
+                float _Gloss;
+                float _Alpha;
+                float _Cutoff;
 
-            float _ReflectAmount;
-            fixed4 _ReflectColor;
+                float _DissolveColorPow;
+                float _DissolveAmount;
+                float _DissolveWidth;
+                fixed4 _DissolveFristColor;
+                fixed4 _DissolveSecondColor;
 
-            float _RefractAmount;
-            fixed4 _RefractColor;
-            fixed4 _RefractRatio;
+                float _ReflectAmount;
+                fixed4 _ReflectColor;
 
-            float _FresnelScale;
+                float _RefractAmount;
+                fixed4 _RefractColor;
+                fixed4 _RefractRatio;
 
-            float _Frequency;
-            float _Magnitude;
-            float _InvWaveLengh;
-            float _WaveSpeed;
+                float _FresnelScale;
 
-            fixed4 _Color;
-            fixed4 _Specular;
+                float _Frequency;
+                float _Magnitude;
+                float _InvWaveLengh;
+                float _WaveSpeed;
 
-            float4 _MainTex_ST;
-            float4 _BumpMap_ST;
-            float4 _Dissolve_ST;
-            
-            float4 _ReflectCubemap_ST;
-            float4 _ReflratCubemap_ST;
-            
+                fixed4 _Color;
+                fixed4 _Specular;
+
+                float4 _MainTex_ST;
+                float4 _BumpMap_ST;
+                float4 _Dissolve_ST;
+                
+                float4 _ReflectCubemap_ST;
+                float4 _ReflratCubemap_ST;
+            CBUFFER_END
+
             sampler2D _MainTex;
             sampler2D _BumpMap;
             sampler2D _Dissolve;
@@ -122,7 +125,7 @@ Shader "Unlit/TransparentShadowsShader"
             
             v2f vert(a2v v) 
             {
-                v2f o;
+                v2f o = (v2f)0;
 
                 float4 offset = float4(0.0,0.0,0.0,0.0);
                 
@@ -222,16 +225,18 @@ Shader "Unlit/TransparentShadowsShader"
             #include "UnityCG.cginc"
             #include "Lighting.cginc"
             #include "AutoLight.cginc"
-            
-            float _Gloss;
-            float _Alpha;
-            float _Cutoff;
 
-            fixed4 _Color;
-            fixed4 _Specular;
+            CBUFFER_START(UnityPerMaterial)
+                float _Gloss;
+                float _Alpha;
+                float _Cutoff;
 
-            float4 _MainTex_ST;
-            float4 _BumpMap_ST;
+                fixed4 _Color;
+                fixed4 _Specular;
+
+                float4 _MainTex_ST;
+                float4 _BumpMap_ST;
+            CBUFFER_END
 
             sampler2D _MainTex;
             sampler2D _BumpMap;
@@ -306,10 +311,16 @@ Shader "Unlit/TransparentShadowsShader"
         Pass
         {
             CGPROGRAM
+
             #pragma vertex vert
-            #pragma fragment frag
             #pragma geometry geom
+            #pragma fragment frag
+
             #include "UnityCG.cginc"
+
+            CBUFFER_START(UnityPerMaterial)
+                fixed4 _Color;
+            CBUFFER_END
 
             struct appdata_t
             {
@@ -321,11 +332,9 @@ Shader "Unlit/TransparentShadowsShader"
                 float4 pos : SV_POSITION;
             };
 
-            fixed4 _Color;
-
             v2f vert(appdata_t v)
             {
-                v2f o;
+                v2f o = (v2f)0;
                 o.pos = UnityObjectToClipPos(v.vertex);
                 return o;
             }
@@ -348,6 +357,7 @@ Shader "Unlit/TransparentShadowsShader"
             }
             ENDCG
         }
+
         Pass 
         { 
             Tags { "LightMode"="ShadowCaster" }
@@ -361,19 +371,20 @@ Shader "Unlit/TransparentShadowsShader"
             
             #include "UnityCG.cginc"
 
-            
-            float _Frequency;
-            float _Magnitude;
-            float _InvWaveLengh;
-            float _WaveSpeed;
+            CBUFFER_START(UnityPerMaterial)
+                float _Frequency;
+                float _Magnitude;
+                float _InvWaveLengh;
+                float _WaveSpeed;
 
-            fixed4 _Color;
-            float _Cutoff;
-            float _DissolveAmount;
+                fixed4 _Color;
+                float _Cutoff;
+                float _DissolveAmount;
+                
+                float4 _MainTex_ST;
+                float4 _Dissolve_ST;
+            CBUFFER_END
 
-            float4 _MainTex_ST;
-            float4 _Dissolve_ST;
-            
             sampler2D _MainTex;
             sampler2D _Dissolve;
 
@@ -392,7 +403,7 @@ Shader "Unlit/TransparentShadowsShader"
             
             v2f vert(a2v v)
             {
-                v2f o;
+                v2f o = (v2f)0;
 
                 float4 offset =float4(0,0,0,0);
 
@@ -423,8 +434,6 @@ Shader "Unlit/TransparentShadowsShader"
             }
             ENDCG
         }
-
-
     } 
     FallBack "Transparent/Cutout/VertexLit"
 }

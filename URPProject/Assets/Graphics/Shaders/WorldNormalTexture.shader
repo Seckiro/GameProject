@@ -4,10 +4,20 @@ Shader "Unlit/WorldNormalTexture"
     {
         [MainTexture]_MainTex ("MainTexture", 2D) = "white" {}
         [MainColor] _Color("Color",Color)=(1,1,1,1)
-        _BumpMap("Narmal", 2D) = "white" {}
+        _BumpMap("Normal", 2D) = "white" {}
         _BumpScale("Bump Scale", float) = 1.0
         _Specular("Specular",Color)=(1,1,1,1)
         _Gloss("Gloss",Range(8.0,256))=20
+        [Space]
+        _DissolveTexture ("Dissolve Texture(R)", 2D) = "white" { }
+        _DissolveAmount ("DissolveAmount", Range(0, 1)) = 0
+        _DissolveEdge ("EdgeWidth", Range(0, 0.8)) = 0
+        _DissolveEdgeColor ("DissolveEdgeColor", Color) = (1, 1, 1, 1)
+        [Space]
+        _CropAmount("CropAmount", float) = 0
+        _CropOffset("CropOffset", float) = 0
+        _CropEdge("CropEdge", Range(0,1)) = 0
+        _CropEdgeColor("CropColor", Color) = (1,1, 1, 1)
     }
     SubShader
     {
@@ -19,23 +29,36 @@ Shader "Unlit/WorldNormalTexture"
         Pass
         {
             CGPROGRAM
+
             #pragma vertex vert
             #pragma fragment frag
 
             #include "UnityCG.cginc"
             #include "Lighting.cginc"
 
+            CBUFFER_START(UnityPerMaterial)
+                float4 _Color;
+                float _Gloss; 
+                float4 _Specular;
+                float _BumpScale;
+
+                float _DissolveAmount;
+                float _DissolveEdge;
+                float4 _DissolveEdgeColor;
+
+                float _CropAmount;
+                float _CropOffset;
+                float _CropEdge;
+                float4 _CropEdgeColor;
+
+                float4 _MainTex_ST;
+                float4 _BumpMap_ST;
+                float4 _DissolveTexture_ST;
+            CBUFFER_END
+
             sampler2D _MainTex;
-            
             sampler2D _BumpMap;
-
-            float _Gloss; 
-            float _BumpScale;
-            float4 _Color;
-            float4 _Specular;
-
-            float4 _MainTex_ST;
-            float4 _BumpMap_ST;
+            sampler2D _DissolveTexture;
 
             struct a2v
             {
@@ -47,8 +70,8 @@ Shader "Unlit/WorldNormalTexture"
 
             struct v2f
             {
-                float4 pos : SV_POSITION;
                 float4 uv : TEXCOORD0;
+                float4 pos : SV_POSITION;
                 float4 Ttow0 : TEXCOORD1;
                 float4 Ttow1 : TEXCOORD2;
                 float4 Ttow2 : TEXCOORD3;
@@ -83,22 +106,25 @@ Shader "Unlit/WorldNormalTexture"
 
             float4 frag (v2f i) : SV_Target
             {
-
-                float3 worldPos= float3(i.Ttow0.w,i.Ttow1.w,i.Ttow2.w);
-
-                float3 lightDir = normalize(UnityWorldSpaceLightDir(worldPos));
-
-                float3 viewDir = normalize(UnityWorldSpaceViewDir(worldPos));
-                
-                float3 bump = UnpackNormal(tex2D(_BumpMap,i.uv.zw));
-
-                bump.xy *= _BumpScale;
-
-                bump.z = sqrt(1.0 - saturate(dot(bump.xy,bump.xy)));
-
-                bump = normalize(float3(dot(i.Ttow0.xyz,bump),dot(i.Ttow1.xyz,bump),dot(i.Ttow2.xyz,bump)));
-
                 float3 albedo = tex2D(_MainTex,i.uv).rgb * _Color.rgb;
+
+                float3 worldPos = float3(i.Ttow0.w,i.Ttow1.w,i.Ttow2.w);
+                float3 lightDir = normalize(UnityWorldSpaceLightDir(worldPos));
+                float3 viewDir = normalize(UnityWorldSpaceViewDir(worldPos));
+
+                float dissolveRange = tex2D(_DissolveTexture,i.uv).r;
+                float offsetValue = dissolveRange - _DissolveAmount;
+                clip(offsetValue);
+
+                offsetValue += (1 - sign(_DissolveAmount)) * _DissolveEdge;
+                float edgeFactor = 1 - saturate(offsetValue / _DissolveEdge);
+                float clipValue = - worldPos.y - _CropAmount + _CropOffset ;
+                clip(clipValue);
+
+                float3 bump = UnpackNormal(tex2D(_BumpMap,i.uv.zw));
+                bump.xy = bump.xy * _BumpScale;
+                bump.z = sqrt(1.0 - saturate(dot(bump.xy,bump.xy)));
+                bump = normalize(float3(dot(i.Ttow0.xyz,bump),dot(i.Ttow1.xyz,bump),dot(i.Ttow2.xyz,bump)));
 
                 float3 anbient = UNITY_LIGHTMODEL_AMBIENT.xyz * albedo;
 
@@ -108,7 +134,14 @@ Shader "Unlit/WorldNormalTexture"
 
                 float3 specular = _LightColor0.rgb * _Specular.rgb * pow(max(0,dot(bump,halfDir)),_Gloss);
 
-                return float4 (anbient+ diffuse + specular,1.0f);
+                float4 lightColor = float4 (anbient+ diffuse + specular,_Color.a);
+
+                float4 dissolveColor = lerp(lightColor , _DissolveEdgeColor, edgeFactor);
+                float4 cropColor = lerp(_CropEdgeColor,lightColor , saturate (clipValue/_CropEdge));
+
+                float4 finalColor = ((dissolveColor + cropColor) / 2);
+
+                return finalColor;
             }
             ENDCG
         }

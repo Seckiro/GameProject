@@ -17,7 +17,7 @@ Shader "Unlit/TransParentBlendShader"
             Tags {"LightMode"="UniversalForward"}
             
             ZWrite On
-            Blend  SrcAlpha OneMinusSrcAlpha
+            Blend SrcAlpha OneMinusSrcAlpha
             Cull Front
             CGPROGRAM
 

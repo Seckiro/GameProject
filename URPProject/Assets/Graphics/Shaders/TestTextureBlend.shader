@@ -28,7 +28,8 @@ Shader "Unlit/TestTextureBlend"
 
             struct v2f
             {
-                float2 uv : TEXCOORD0;
+                float2 uv1 : TEXCOORD0;
+                float2 uv2 : TEXCOORD1;
                 float4 vertex : SV_POSITION;
             };
 
@@ -44,14 +45,15 @@ Shader "Unlit/TestTextureBlend"
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+                o.uv1 = TRANSFORM_TEX(v.uv, _MainTex);
+                o.uv2 = TRANSFORM_TEX(v.uv, _BaseMap);
                 return o;
             }
 
             fixed4 frag (v2f i) : SV_Target
             {
-                fixed4 mainTex = tex2D(_MainTex, i.uv);
-                fixed4 baseMap = tex2D(_BaseMap, i.uv);
+                fixed4 mainTex = tex2D(_MainTex, i.uv1);
+                fixed4 baseMap = tex2D(_BaseMap, i.uv2);
 
                 fixed4 fineColor = mainTex * baseMap * _MainColor;
 
