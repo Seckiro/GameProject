@@ -65,13 +65,9 @@ Shader "Unlit/GeometryNormal"
                 return output;
             }
 
-            //几何着色器，放在顶点和片元之间。
-            //maxvertexcount设置从顶点着色器到几何着色器每次输出最大顶点数量
             //输入修饰有point、line、triangle、lineadj、triangleadj分别对应点、线、三角形、有临接的线段、有邻接的三角形
-            //inout输出修饰类型有PointStream、LineStream、TriangleStream，分别显示顶点、线段、三角面
-            //输入顶点的信息，inout这里是将一个数据传入函数，在函数中的修改会返回到函数外的数据
             //一次接受point 的1个顶点数据，输出为LineStream的4条线段
-            [maxvertexcount(4)]
+            [maxvertexcount(3)]
             void geo(point v2g p[1], inout LineStream<g2f> triStream)
             {
                 g2f pIn_1;
