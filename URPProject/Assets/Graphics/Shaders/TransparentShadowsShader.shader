@@ -50,7 +50,7 @@ Shader "Unlit/TransparentShadowsShader"
             ZWrite On
             Blend  SrcAlpha OneMinusSrcAlpha
 
-            CGPROGRAM
+            HLSLPROGRAM
 
             #include "UnityCG.cginc"
             #include "Lighting.cginc"
@@ -58,7 +58,7 @@ Shader "Unlit/TransparentShadowsShader"
             
             #pragma vertex vert
             #pragma fragment frag
-            
+
             #pragma multi_compile_fwdbase	
 
             CBUFFER_START(UnityPerMaterial)
@@ -95,15 +95,15 @@ Shader "Unlit/TransparentShadowsShader"
                 
                 float4 _ReflectCubemap_ST;
                 float4 _ReflratCubemap_ST;
+
+                sampler2D _MainTex;
+                sampler2D _BumpMap;
+                sampler2D _Dissolve;
+
+                samplerCUBE _ReflectCubemap;
+                samplerCUBE _RefractCubemap;
             CBUFFER_END
 
-            sampler2D _MainTex;
-            sampler2D _BumpMap;
-            sampler2D _Dissolve;
-
-            samplerCUBE _ReflectCubemap;
-            samplerCUBE _RefractCubemap;
-            
             struct a2v 
             {
                 float4 vertex : POSITION;
@@ -183,6 +183,7 @@ Shader "Unlit/TransparentShadowsShader"
                 fixed3 diffuse = _LightColor0.rgb * albedo * max(0, dot(bump, lightDir));
                 
                 fixed3 halfDir = normalize(lightDir + viewDir);
+                
                 fixed3 specular = _LightColor0.rgb * _Specular.rgb * pow(max(0, dot(bump, halfDir)), _Gloss);
                 
                 fixed3 reflection = texCUBE(_ReflectCubemap,worldReflect).rgb * _ReflectColor.rgb;
@@ -190,23 +191,23 @@ Shader "Unlit/TransparentShadowsShader"
 
                 fixed fresnel = _FresnelScale + (1 - _FresnelScale) * pow(1 - dot(viewDir, worldNormal),5);
 
-                fixed t = 1 - smoothstep(0.0,_DissolveWidth, dissolve.r - _DissolveAmount);
+                fixed range = 1 - smoothstep(0.0,_DissolveWidth, dissolve.r - _DissolveAmount);
 
-                fixed3 dissolveColor= lerp(_DissolveFristColor,_DissolveSecondColor,t);
-
-                dissolveColor = pow(dissolveColor,_DissolveColorPow);
-
-                UNITY_LIGHT_ATTENUATION(atten, i, worldPos);
+                fixed3 dissolveColor= lerp(_DissolveFristColor,_DissolveSecondColor,range);
 
                 fixed3  finalColor = lerp(diffuse, reflection, _ReflectAmount);
 
+                UNITY_LIGHT_ATTENUATION(atten, i, worldPos);
+
+                dissolveColor = pow(dissolveColor,_DissolveColorPow);
+                
                 finalColor = ambient + specular + lerp(finalColor, refraction, saturate(fresnel) + _RefractAmount) * atten; 
 
-                finalColor = lerp(finalColor,dissolveColor, t * step(0.0001,_DissolveAmount)) ; 
+                finalColor = lerp(finalColor,dissolveColor, range * step(0.0001,_DissolveAmount)) ; 
 
                 return fixed4(finalColor , _Alpha );
             }
-            ENDCG
+            ENDHLSL
         }
         
         Pass 
@@ -339,11 +340,6 @@ Shader "Unlit/TransparentShadowsShader"
                 return o;
             }
 
-            void frag(v2f i, out fixed4 color : COLOR)
-            {
-                color = _Color;
-            }
-
             [maxvertexcount(3)]
             void geom(triangle v2f input[3], inout TriangleStream<v2f> triStream)
             {
@@ -354,6 +350,11 @@ Shader "Unlit/TransparentShadowsShader"
                     o.pos = UnityObjectToClipPos(o.pos);
                     triStream.Append(o);
                 }
+            }
+            
+            void frag(v2f i, out fixed4 color : COLOR)
+            {
+                color = _Color;
             }
             ENDCG
         }
