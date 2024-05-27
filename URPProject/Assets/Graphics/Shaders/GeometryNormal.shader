@@ -1,51 +1,48 @@
-Shader "Unlit/GeometryNormal"
+Shader "Debug/GeometryNormal"
 {
     Properties
     {
-        _LineLength("LineLength",float) = 1.
-        _LineColorOffset("ColorOffset",COLOR) = (1,1,1,1)
-        _LineColorRectify("ColorRectify",float)=(0,0,0)
-        _LineColorIntensity("ColorIntensity",Range(0,5)) = 0.5
+        [HDR]_NormalColorOffset("Normal Color Offset",COLOR) = (1,1,1,1)
+        _NormalLength("Normal Length",float) = 1
+        _NormalColorRectify("Normal Color Rectify",float)=(0,0,0)
+        _NormalColorIntensity("Normal Color Intensity",Range(0,5)) = 0.5
     }
-
     SubShader
     {
         Pass
         {
-            Tags { "RenderType" = "Opaque" }
-            LOD 200
-            
+            NAME "Normal Pass"
+
+            Tags { "RenderType"="Opaque" }
+
             CGPROGRAM
+
             #pragma target 5.0
+
             #pragma vertex vert
             #pragma geometry geo
             #pragma fragment frag
 
             #include "UnityCG.cginc"
             
-            float _LineLength;
-            float _LineColorIntensity;
-            float3 _LineColorRectify;
-            fixed4 _LineColorOffset;
+            float _NormalLength;
+            float _NormalColorIntensity;
+            float3 _NormalColorRectify;
+            fixed4 _NormalColorOffset;
 
             struct v2g
             {
                 float4 pos       : POSITION;
-                
                 float3 normal    : NORMAL;
-                
-                float2 tex0        : TEXCOORD0;
-
-                fixed3 color        :COLOR;
+                float2 tex0      : TEXCOORD0;
+                fixed3 color     : COLOR;
             };
 
             struct g2f
             {
                 float4 pos       : POSITION;
-                
-                float2 tex0        : TEXCOORD0;
-
-                fixed3 color        :COLOR;
+                float2 tex0      : TEXCOORD0;
+                fixed3 color     : COLOR;
             };
             
             v2g vert(appdata_base v)
@@ -60,13 +57,11 @@ Shader "Unlit/GeometryNormal"
 
                 output.tex0 = v.texcoord;
 
-                output.color = v.normal * _LineColorIntensity + _LineColorRectify.rgb;
+                output.color = v.normal * _NormalColorIntensity + _NormalColorRectify.rgb;
 
                 return output;
             }
 
-            //输入修饰有point、line、triangle、lineadj、triangleadj分别对应点、线、三角形、有临接的线段、有邻接的三角形
-            //一次接受point 的1个顶点数据，输出为LineStream的4条线段
             [maxvertexcount(3)]
             void geo(point v2g p[1], inout LineStream<g2f> triStream)
             {
@@ -82,7 +77,7 @@ Shader "Unlit/GeometryNormal"
 
                 g2f pIn_2;
                 
-                float4 pos = p[0].pos + float4(p[0].normal,0) *_LineLength;
+                float4 pos = p[0].pos + float4(p[0].normal,0) *_NormalLength;
                 
                 pIn_2.pos = mul(UNITY_MATRIX_VP, pos);
                 
@@ -95,7 +90,7 @@ Shader "Unlit/GeometryNormal"
 
             fixed4 frag(g2f input) : COLOR
             {
-                return fixed4(input.color*_LineColorOffset.rgb,1);
+                return fixed4(input.color*_NormalColorOffset.rgb,1);
             }
 
             ENDCG
