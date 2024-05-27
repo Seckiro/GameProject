@@ -12,17 +12,26 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - _AdditionalLights
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _BaseMap:
+        m_Texture: {fileID: 2800000, guid: ded5e7c670738d5449330cab35c0d6b4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BaseTex:
+        m_Texture: {fileID: 2800000, guid: aca1296815de17b48a9a810ec1eccaf9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 2800000, guid: 1628b03f462e900448e7d5600326f96c, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -56,7 +65,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 2da5900cc0c66b04e9ad4f11efd14aab, type: 3}
+        m_Texture: {fileID: 2800000, guid: 989f197cd1c7e984e8b651a87c34975e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -81,33 +90,40 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AddLights: 1
     - _Alpha: 1
     - _AlphaRange: 1
-    - _BumpScale: 1
-    - _Cutoff: 1
+    - _BlendProportion: 1.7
+    - _BumpScale: 0
+    - _Cutoff: 0
     - _DetailNormalMapScale: 1
-    - _DissolveAmount: 0
+    - _DissolveAmount: 0.459
     - _DissolveColorPow: 1
-    - _DissolveWidth: 0.054
+    - _DissolveWidth: 0
     - _DstBlend: 0
-    - _Frequency: 0
+    - _Frequency: 0.8
     - _FresnelScale: 0
-    - _Gloss: 52
+    - _Gloss: 128
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _InvWaveLengh: 0
-    - _Magnitude: 0
+    - _InvWaveLengh: 0.5
+    - _LineOffset: -1.18
+    - _LineScale: 0
+    - _Magnitude: 0.5
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _ReflectAmount: 0.438
-    - _RefractAmount: 0.337
-    - _RefractRatio: 0.317
+    - _PointOffset: 1.82
+    - _PointScale: 1
+    - _ReflectAmount: 0
+    - _RefractAmount: 0
+    - _RefractRatio: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
+    - _TriangleOffset: 0
     - _UVSec: 0
     - _WaveSpeed: 0
     - _ZWrite: 1
@@ -117,7 +133,10 @@ Material:
     - _DissolveFristColor: {r: 0.39170074, g: 0, b: 1, a: 1}
     - _DissolveSecondColor: {r: 1, g: 0.6977413, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _LineColor: {r: 1, g: 0, b: 0, a: 1}
+    - _PointColor: {r: 1, g: 0.13899943, b: 0, a: 1}
     - _ReflectColor: {r: 1, g: 1, b: 1, a: 1}
     - _RefractColor: {r: 1, g: 1, b: 1, a: 1}
     - _Specular: {r: 1, g: 1, b: 1, a: 1}
+    - _TriangleColor: {r: 1, g: 1, b: 1, a: 0}
   m_BuildTextureStacks: []
