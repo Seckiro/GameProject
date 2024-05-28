@@ -103,7 +103,7 @@ Material:
     - _DstBlend: 0
     - _Frequency: 0.8
     - _FresnelScale: 0
-    - _Gloss: 128
+    - _Gloss: 32
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1

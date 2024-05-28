@@ -7,6 +7,11 @@ Shader "Unlit/SceneLitURP"
         _BaseMap ("Base Tex", 2D) = "white" {}
         _BlendProportion("Blend Proportion", Range(-10, 10)) = 1
         
+        _RampTex("Ramp Tex", 2D) = "white"{}
+
+        _SpecularMask("SpecularMask", 2D) = "white"{}
+        _SpecularScale("SpecularScale", Range(-2, 2)) = 1.0
+
         [space]
         _BumpMap ("Normal Map", 2D) = "bump" {}
         _BumpScale("Bump Scale",  Range(-5,5)) = 1.0
@@ -15,6 +20,8 @@ Shader "Unlit/SceneLitURP"
         _Diffuse ("Diffuse Color", Color) = (1, 1, 1, 1)
         [Space]
         _Gloss ("Gloss", Range(8.0, 256)) = 20
+        [Space]
+        _Ambient ("Ambient", Range(0.0, 1)) = 1
         [Space]
         _Cutoff ("Cutoff", Range(0, 1)) = 1
         _Alpha ("Alpha", Range(0, 1)) = 1
@@ -57,8 +64,8 @@ Shader "Unlit/SceneLitURP"
 
             Tags {"LightMode"="UniversalForward"}
             
-            Cull front
-            ZWrite off
+            Cull Front
+            ZWrite On
             Blend SrcAlpha OneMinusSrcAlpha
 
             HLSLPROGRAM
@@ -69,17 +76,13 @@ Shader "Unlit/SceneLitURP"
 
             #pragma shader_feature _AdditionalLights
 
-            #pragma multi_compile _ _MAIN_LIGHT_SHADOWS
-            #pragma multi_compile _ _MAIN_LIGHT_SHADOWS_CASCADE
-            #pragma multi_compile_fragment _ _ADDITIONAL_LIGHT_SHADOWS
-            #pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
-            #pragma multi_compile_fragment _ _SHADOWS_SOFT
-
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             
             CBUFFER_START(UnityPerMaterial)
                 float _Gloss;
+                float _Ambient;
+                float _SpecularScale;
                 float _Alpha;
                 float _Cutoff;
                 float _BumpScale;
@@ -95,7 +98,7 @@ Shader "Unlit/SceneLitURP"
 
                 float _RefractAmount;
                 float4 _RefractColor;
-                float4 _RefractRatio;
+                float _RefractRatio;
 
                 float _FresnelScale;
 
@@ -116,9 +119,6 @@ Shader "Unlit/SceneLitURP"
                 float4 _ReflratCubemap_ST;
 
                 float4 _LightDirection;
-
-                samplerCUBE _ReflectCubemap;
-                samplerCUBE _RefractCubemap;
             CBUFFER_END
 
             TEXTURE2D(_MainTex);
@@ -127,12 +127,24 @@ Shader "Unlit/SceneLitURP"
             TEXTURE2D(_BaseMap);
             SAMPLER(sampler_BaseMap);
 
+            TEXTURE2D(_SpecularMask);
+            SAMPLER(sampler_SpecularMask);
+
+            TEXTURE2D(_RampTex);
+            SAMPLER(sampler_RampTex);
+
             TEXTURE2D(_BumpMap);
             SAMPLER(sampler_BumpMap);
 
             TEXTURE2D(_Dissolve);
             SAMPLER(sampler_Dissolve);
 
+            TEXTURECUBE(_ReflectCubemap);
+            SAMPLER(sampler_ReflectCubemap);
+
+            TEXTURECUBE(_RefractCubemap);
+            SAMPLER(sampler_RefractCubemap);
+            
             struct a2v
             {
                 float4 vertex : POSITION;
@@ -160,18 +172,6 @@ Shader "Unlit/SceneLitURP"
                 float4 TtoW2 : TEXCOORD3; 
                 float4 effectUV : TEXCOORD4; 
             };
-
-            half3 LightingBased(half3 lightColor, half3 lightDir, half lightAtten, half3 worldNormal, half3 viewDir, half3 albedo) {
-                lightDir = normalize(lightDir);
-                viewDir = normalize(viewDir);
-                
-                half3 diffuse = lightColor * albedo * saturate(dot(worldNormal, lightDir) * 0.5 + 0.5);
-                return diffuse * lightAtten;
-            }
-            
-            half3 LightingBased(Light light, half3 worldNormal, half3 viewDir, half3 albedo) {
-                return LightingBased(light.color, light.direction, light.shadowAttenuation * light.distanceAttenuation, worldNormal, viewDir, albedo);
-            }
 
             v2g vert (a2v v)
             {
@@ -203,78 +203,120 @@ Shader "Unlit/SceneLitURP"
                     o.uv = input[i].uv;
                     o.pos = input[i].pos;
 
-                    float3 positionWS = float3(input[i].TtoW0.w,input[i].TtoW1.w,input[i].TtoW2.w);
-                    float3 normalWS = float3(input[i].TtoW0.z,input[i].TtoW1.z,input[i].TtoW2.z);
                     float posValue = sin( _Frequency * _Time.y + o.pos.x * _InvWaveLengh +o.pos.y * _InvWaveLengh + o.pos.z * _InvWaveLengh) * _Magnitude;
                     float4 offset = float4(posValue,posValue,posValue,posValue);
 
                     o.effectUV.xy = input[i].uv.xy * _Dissolve_ST.xy + _Dissolve_ST.zw + float2 (0.0 ,_Time.y * _WaveSpeed);
-                    // 获取阴影专用裁剪空间下的坐标
-                    o.pos = TransformWorldToHClip(ApplyShadowBias(positionWS, normalWS, _LightDirection) + offset);
-                    
-                    // 判断是否是在DirectX平台翻转过坐标
-                    #if UNITY_REVERSED_Z
-                        o.pos.z = min(o.pos.z, o.pos.w * UNITY_NEAR_CLIP_VALUE);
-                    #else
-                        o.pos.z = max(o.pos.z, o.pos.w * UNITY_NEAR_CLIP_VALUE);
-                    #endif
-                    
+
+                    o.pos = TransformObjectToHClip(o.pos + offset);
+
+                    o.TtoW0 = input[i].TtoW0;  
+                    o.TtoW1 = input[i].TtoW1;  
+                    o.TtoW2 = input[i].TtoW2; 
+
                     g.Append(o);
                 }
 
             }
 
             float4 frag (g2f i) : SV_Target
-            {
-                half3 worldNormal = float3(i.TtoW0.z,i.TtoW1.z,i.TtoW2.z);
-                half3 positionWS = float3(i.TtoW0.w,i.TtoW1.w,i.TtoW2.w);
+            {         
+                float4 albedo = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
+                float4 baseTex = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, i.uv);
+                
+                albedo = lerp (albedo, baseTex, _BlendProportion) * _Color;
 
-                half3 viewDir = normalize(_WorldSpaceCameraPos.xyz - positionWS);
+                clip(albedo.a - _Cutoff);
+
+                float4 dissolve = SAMPLE_TEXTURE2D(_Dissolve, sampler_Dissolve, i.effectUV.xy);
                 
-                half4 texColor = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, i.uv);
-                clip(texColor.a - _Cutoff);
-                half3 albedo = texColor.rgb * _Color.rgb;
-                
+                clip(dissolve.r - _DissolveAmount);
+
+                float dissolveColorBlend = 1 - smoothstep(0.0,_DissolveWidth, dissolve.r - _DissolveAmount);
+                float3 dissolveColor= lerp(_DissolveFristColor,_DissolveSecondColor,dissolveColorBlend);
+
+                dissolveColor = pow(dissolveColor,_DissolveColorPow);
+
+                half3 worldPos = float3(i.TtoW0.w,i.TtoW1.w,i.TtoW2.w);
+                half3 worldNormal = normalize(float3(i.TtoW0.z,i.TtoW1.z,i.TtoW2.z));
+
+                half3 viewDir = normalize(_WorldSpaceCameraPos.xyz - worldPos);
+
+                //half3 ambient = half3(unity_SHAr.w, unity_SHAg.w, unity_SHAb.w);
+                half3 ambient = SampleSH(worldNormal) * _Ambient;
+
                 float4 shadowCoord = TransformWorldToShadowCoord(worldNormal);
                 Light mainLight = GetMainLight(shadowCoord);
-                half3 color = LightingBased(mainLight, worldNormal, viewDir, albedo);
+
+                half halfLambert = saturate(dot(worldNormal, normalize(mainLight.direction)) * 0.5 + 0.5);
+                half3 diffuseColor = SAMPLE_TEXTURE2D(_RampTex, sampler_RampTex, half2(halfLambert, halfLambert)).rgb;
+                
+                //half3 diffuse = mainLight.color * albedo * diffuseColor *  mainLight.shadowAttenuation * mainLight.distanceAttenuation;
+                half3 diffuse = mainLight.color * albedo * halfLambert *  mainLight.shadowAttenuation * mainLight.distanceAttenuation;
                 
                 #if _AdditionalLights
                     uint addLightCount = GetAdditionalLightsCount();
                     for(uint iu = 0; iu < addLightCount; iu++) 
                     {
-                        Light addLight = GetAdditionalLight(iu, positionWS);
-                        color += LightingBased(addLight, worldNormal, viewDir, albedo);
+                        Light addLight = GetAdditionalLight(iu, worldPos);
+                        half3 addLightDiffuse = addLight.color * albedo * saturate(dot(worldNormal, normalize(addLight.direction)) * 0.5 + 0.5);
+                        diffuse += addLightDiffuse * addLight.shadowAttenuation * addLight.distanceAttenuation;
                     }
                 #endif
-                
-                half3 ambient = SampleSH(worldNormal);
-                return half4(color + ambient, 1.0);
+
+                float3 bump = UnpackNormal(SAMPLE_TEXTURECUBE(_BumpMap,sampler_BumpMap, i.uv.zw));
+                bump.xy = bump.xy * _BumpScale;
+                bump.z = sqrt(1.0 - saturate(dot(bump.xy,bump.xy)));
+                bump = normalize(half3(dot(i.TtoW0.xyz, bump), dot(i.TtoW1.xyz, bump), dot(i.TtoW2.xyz, bump)));
+
+
+                half specularMask = SAMPLE_TEXTURE2D(_SpecularMask, sampler_SpecularMask, i.uv).r * _SpecularScale;
+                half3 specular = mainLight.color.rgb * _Specular.rgb * pow(max(0, dot(bump, normalize(mainLight.direction + viewDir))), _Gloss) * specularMask;
+
+                float fresnel = _FresnelScale + (1 - _FresnelScale) * pow(1 - saturate(dot(viewDir, bump)),4); 
+
+                float3 worldReflect = reflect(-viewDir, worldNormal);
+                float3 reflection = SAMPLE_TEXTURECUBE(_ReflectCubemap, sampler_ReflectCubemap, worldReflect).rgb * _ReflectColor.rgb;
+                float3 reflectionColor = lerp(diffuse, reflection, fresnel) * _ReflectAmount;
+
+                float3 worldRefract = refract(-viewDir, worldNormal, _RefractRatio);
+                float3 refraction = SAMPLE_TEXTURECUBE(_RefractCubemap, sampler_RefractCubemap, worldRefract).rgb * _RefractColor.rgb;
+                float3 refractionColor = lerp(diffuse, refraction, 1 - fresnel) * _RefractAmount;
+
+                float3 lightFinalColor = ambient + specular + (refractionColor * reflectionColor);
+
+                float3 finalColor = lerp(lightFinalColor, dissolveColor, dissolveColorBlend * step(0.0001,_DissolveAmount)) ; 
+
+                return float4(finalColor , _Alpha);
             }
             ENDHLSL
         }
-        /*
+        
         Pass
         {
             NAME "SRPDefaultUnlit"
 
             Tags {"LightMode"="SRPDefaultUnlit"}
             
-            Cull back
-            ZWrite off
+            Cull Back
+            ZWrite On
             Blend SrcAlpha OneMinusSrcAlpha
 
-            CGPROGRAM
+            HLSLPROGRAM
+
             #pragma vertex vert
             #pragma geometry geom
             #pragma fragment frag
 
+            #pragma shader_feature _AdditionalLights
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             
             CBUFFER_START(UnityPerMaterial)
                 float _Gloss;
+                float _Ambient;
+                float _SpecularScale;
                 float _Alpha;
                 float _Cutoff;
                 float _BumpScale;
@@ -290,7 +332,7 @@ Shader "Unlit/SceneLitURP"
 
                 float _RefractAmount;
                 float4 _RefractColor;
-                float4 _RefractRatio;
+                float _RefractRatio;
 
                 float _FresnelScale;
 
@@ -310,16 +352,34 @@ Shader "Unlit/SceneLitURP"
                 float4 _ReflectCubemap_ST;
                 float4 _ReflratCubemap_ST;
 
-                sampler2D _MainTex;
-                sampler2D _BaseMap;
-                sampler2D _BumpMap;
-                sampler2D _Dissolve;
-
-                samplerCUBE _ReflectCubemap;
-                samplerCUBE _RefractCubemap;
+                float4 _LightDirection;
             CBUFFER_END
 
-            struct a2v 
+            TEXTURE2D(_MainTex);
+            SAMPLER(sampler_MainTex);
+
+            TEXTURE2D(_BaseMap);
+            SAMPLER(sampler_BaseMap);
+
+            TEXTURE2D(_SpecularMask);
+            SAMPLER(sampler_SpecularMask);
+
+            TEXTURE2D(_RampTex);
+            SAMPLER(sampler_RampTex);
+
+            TEXTURE2D(_BumpMap);
+            SAMPLER(sampler_BumpMap);
+
+            TEXTURE2D(_Dissolve);
+            SAMPLER(sampler_Dissolve);
+
+            TEXTURECUBE(_ReflectCubemap);
+            SAMPLER(sampler_ReflectCubemap);
+
+            TEXTURECUBE(_RefractCubemap);
+            SAMPLER(sampler_RefractCubemap);
+            
+            struct a2v
             {
                 float4 vertex : POSITION;
                 float3 normal : NORMAL;
@@ -330,11 +390,14 @@ Shader "Unlit/SceneLitURP"
             struct v2g 
             {
                 float4 pos : POSITION;
-                float2 uv : TEXCOORD0;
-                float3 normal : TEXCOORD1;
+                float4 uv : TEXCOORD0;
+                float4 TtoW0 : TEXCOORD1;  
+                float4 TtoW1 : TEXCOORD2;  
+                float4 TtoW2 : TEXCOORD3; 
+                float4 effectUV : TEXCOORD4; 
             };
 
-            struct v2f 
+            struct g2f 
             {
                 float4 pos : SV_POSITION;
                 float4 uv : TEXCOORD0;
@@ -344,27 +407,19 @@ Shader "Unlit/SceneLitURP"
                 float4 effectUV : TEXCOORD4; 
             };
 
-            v2g vert (appdata v)
+            v2g vert (a2v v)
             {
-                v2f o = (v2f)0;
-
-                float4 offset = float4(0.0,0.0,0.0,0.0);
-                
-                offset.x = sin(_Frequency * _Time.y + v.vertex.x * _InvWaveLengh + v.vertex.y * _InvWaveLengh + v.vertex.z * _InvWaveLengh) * _Magnitude;
-                offset.y = sin(_Frequency * _Time.y + v.vertex.x * _InvWaveLengh + v.vertex.y * _InvWaveLengh + v.vertex.z * _InvWaveLengh) * _Magnitude;
-                offset.z = sin(_Frequency * _Time.y + v.vertex.x * _InvWaveLengh + v.vertex.y * _InvWaveLengh + v.vertex.z * _InvWaveLengh) * _Magnitude;
-                
-                o.pos = TransformWorldToHClip(v.vertex + offset);
-
-                o.uv.xy = v.texcoord.xy * _MainTex_ST.xy + _MainTex_ST.zw + float2 (0.0,_Time.y * _WaveSpeed);
-                o.uv.zw = v.texcoord.xy * _BumpMap_ST.xy + _BumpMap_ST.zw + float2 (0.0,_Time.y * _WaveSpeed);
-
-                o.effectUV.xy = v.texcoord.xy * _Dissolve_ST.xy + _Dissolve_ST.zw + float2 (0.0,_Time.y * _WaveSpeed);
+                v2g o = (v2g)0;
 
                 float3 worldPos =  mul(UNITY_MATRIX_M, v.vertex).xyz;  
                 float3 worldNormal = TransformObjectToWorldNormal(v.normal);
                 float3 worldTangent = TransformObjectToWorldDir(v.tangent.xyz);
                 float3 worldBinormal = cross(worldNormal, worldTangent) * v.tangent.w; 
+
+                o.pos = v.vertex;
+
+                o.uv.xy = v.texcoord.xy * _MainTex_ST.xy + _MainTex_ST.zw + float2 (0.0,_Time.y * _WaveSpeed);
+                o.uv.zw = v.texcoord.xy * _BumpMap_ST.xy + _BumpMap_ST.zw + float2 (0.0,_Time.y * _WaveSpeed);
 
                 o.TtoW0 = float4(worldTangent.x, worldBinormal.x, worldNormal.x, worldPos.x);  
                 o.TtoW1 = float4(worldTangent.y, worldBinormal.y, worldNormal.y, worldPos.y);  
@@ -376,29 +431,106 @@ Shader "Unlit/SceneLitURP"
             [maxvertexcount(3)]
             void geom (triangle v2g input[3], inout TriangleStream<g2f> g)
             {
+                g2f o = (g2f)0;
+                for (int i = 0; i<3; i++)
+                {
+                    o.uv = input[i].uv;
+                    o.pos = input[i].pos;
+
+                    float posValue = sin( _Frequency * _Time.y + o.pos.x * _InvWaveLengh +o.pos.y * _InvWaveLengh + o.pos.z * _InvWaveLengh) * _Magnitude;
+                    float4 offset = float4(posValue,posValue,posValue,posValue);
+
+                    o.effectUV.xy = input[i].uv.xy * _Dissolve_ST.xy + _Dissolve_ST.zw + float2 (0.0 ,_Time.y * _WaveSpeed);
+
+                    o.pos = TransformObjectToHClip(o.pos + offset);
+
+                    o.TtoW0 = input[i].TtoW0;  
+                    o.TtoW1 = input[i].TtoW1;  
+                    o.TtoW2 = input[i].TtoW2; 
+
+                    g.Append(o);
+                }
 
             }
 
             float4 frag (g2f i) : SV_Target
-            {
-                half3 worldNormal = normalize(i.worldNormal);
-                half3 worldLightDir = normalize(_MainLightPosition.xyz);
+            {         
+                float4 albedo = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
+                float4 baseTex = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, i.uv);
                 
-                half4 texColor = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
-                half3 albedo = texColor.rgb * _Color.rgb;
-                half3 ambient = half3(unity_SHAr.w, unity_SHAg.w, unity_SHAb.w) * albedo;
-                half3 diffuse = _MainLightColor.rgb * albedo * saturate(dot(worldLightDir, worldNormal));
+                albedo = lerp (albedo, baseTex, _BlendProportion) * _Color;
+
+                clip(albedo.a - _Cutoff);
+
+                float4 dissolve = SAMPLE_TEXTURE2D(_Dissolve, sampler_Dissolve, i.effectUV.xy);
                 
-                return half4(ambient + diffuse, _AlphaScale * texColor.a);
+                clip(dissolve.r - _DissolveAmount);
+
+                float dissolveColorBlend = 1 - smoothstep(0.0,_DissolveWidth, dissolve.r - _DissolveAmount);
+                float3 dissolveColor= lerp(_DissolveFristColor,_DissolveSecondColor,dissolveColorBlend);
+
+                dissolveColor = pow(dissolveColor,_DissolveColorPow);
+
+                half3 worldPos = float3(i.TtoW0.w,i.TtoW1.w,i.TtoW2.w);
+                half3 worldNormal = normalize(float3(i.TtoW0.z,i.TtoW1.z,i.TtoW2.z));
+
+                half3 viewDir = normalize(_WorldSpaceCameraPos.xyz - worldPos);
+
+                //half3 ambient = half3(unity_SHAr.w, unity_SHAg.w, unity_SHAb.w);
+                half3 ambient = SampleSH(worldNormal) * _Ambient;
+
+                float4 shadowCoord = TransformWorldToShadowCoord(worldNormal);
+                Light mainLight = GetMainLight(shadowCoord);
+
+                half halfLambert = saturate(dot(worldNormal, normalize(mainLight.direction)) * 0.5 + 0.5);
+                half3 diffuseColor = SAMPLE_TEXTURE2D(_RampTex, sampler_RampTex, half2(halfLambert, halfLambert)).rgb;
+                
+                //half3 diffuse = mainLight.color * albedo * diffuseColor *  mainLight.shadowAttenuation * mainLight.distanceAttenuation;
+                half3 diffuse = mainLight.color * albedo * halfLambert *  mainLight.shadowAttenuation * mainLight.distanceAttenuation;
+                
+                #if _AdditionalLights
+                    uint addLightCount = GetAdditionalLightsCount();
+                    for(uint iu = 0; iu < addLightCount; iu++) 
+                    {
+                        Light addLight = GetAdditionalLight(iu, worldPos);
+                        half3 addLightDiffuse = addLight.color * albedo * saturate(dot(worldNormal, normalize(addLight.direction)) * 0.5 + 0.5);
+                        diffuse += addLightDiffuse * addLight.shadowAttenuation * addLight.distanceAttenuation;
+                    }
+                #endif
+
+                float3 bump = UnpackNormal(SAMPLE_TEXTURECUBE(_BumpMap,sampler_BumpMap, i.uv.zw));
+                bump.xy = bump.xy * _BumpScale;
+                bump.z = sqrt(1.0 - saturate(dot(bump.xy,bump.xy)));
+                bump = normalize(half3(dot(i.TtoW0.xyz, bump), dot(i.TtoW1.xyz, bump), dot(i.TtoW2.xyz, bump)));
+
+
+                half specularMask = SAMPLE_TEXTURE2D(_SpecularMask, sampler_SpecularMask, i.uv).r * _SpecularScale;
+                half3 specular = mainLight.color.rgb * _Specular.rgb * pow(max(0, dot(bump, normalize(mainLight.direction + viewDir))), _Gloss) * specularMask;
+
+                float fresnel = _FresnelScale + (1 - _FresnelScale) * pow(1 - saturate(dot(viewDir, bump)),4); 
+
+                float3 worldReflect = reflect(-viewDir, worldNormal);
+                float3 reflection = SAMPLE_TEXTURECUBE(_ReflectCubemap, sampler_ReflectCubemap, worldReflect).rgb * _ReflectColor.rgb;
+                float3 reflectionColor = lerp(diffuse, reflection, fresnel) * _ReflectAmount;
+
+                float3 worldRefract = refract(-viewDir, worldNormal, _RefractRatio);
+                float3 refraction = SAMPLE_TEXTURECUBE(_RefractCubemap, sampler_RefractCubemap, worldRefract).rgb * _RefractColor.rgb;
+                float3 refractionColor = lerp(diffuse, refraction, 1 - fresnel) * _RefractAmount;
+
+                float3 lightFinalColor = ambient + specular + (refractionColor * reflectionColor);
+
+                float3 finalColor = lerp(lightFinalColor, dissolveColor, dissolveColorBlend * step(0.0001,_DissolveAmount)) ; 
+
+                return float4(finalColor , _Alpha);
             }
-            ENDCG
+            ENDHLSL
         }
-        */
+        
         Pass 
         { 
             NAME "ShadowCaster"
 
-            Tags { "LightMode"="ShadowCaster" }
+            Tags { "LightMode" = "ShadowCaster" }
 
             Cull Off
             ZWrite On
@@ -417,12 +549,7 @@ Shader "Unlit/SceneLitURP"
 
             #pragma shader_feature _ALPHATEST_ON
 
-            #pragma multi_compile_shadowcaster
-
             CBUFFER_START(UnityPerMaterial)
-                float4 _TriangleColor;
-                float _TriangleOffset;
-
                 float _Frequency;
                 float _Magnitude;
                 float _InvWaveLengh;
@@ -522,7 +649,7 @@ Shader "Unlit/SceneLitURP"
                 clip(dissolve.r - _DissolveAmount);
 
                 return 0;
-            }
+            }  
             ENDHLSL
         }
     }
