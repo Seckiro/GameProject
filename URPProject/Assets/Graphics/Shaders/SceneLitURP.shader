@@ -76,6 +76,8 @@ Shader "Unlit/SceneLitURP"
 
             #pragma shader_feature _AdditionalLights
 
+            
+
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             
@@ -246,6 +248,7 @@ Shader "Unlit/SceneLitURP"
                 half3 ambient = SampleSH(worldNormal) * _Ambient;
 
                 float4 shadowCoord = TransformWorldToShadowCoord(worldNormal);
+                half shadow = MainLightRealtimeShadow(shadowCoord);
                 Light mainLight = GetMainLight(shadowCoord);
 
                 half halfLambert = saturate(dot(worldNormal, normalize(mainLight.direction)) * 0.5 + 0.5);
@@ -283,7 +286,9 @@ Shader "Unlit/SceneLitURP"
                 float3 refraction = SAMPLE_TEXTURECUBE(_RefractCubemap, sampler_RefractCubemap, worldRefract).rgb * _RefractColor.rgb;
                 float3 refractionColor = lerp(diffuse, refraction, 1 - fresnel) * _RefractAmount;
 
-                float3 lightFinalColor = ambient + specular + (refractionColor * reflectionColor);
+                float3 lightFinalColor = specular + (refractionColor * reflectionColor);
+
+                lightFinalColor = lerp(lightFinalColor.rgb * ambient.rgb, lightFinalColor.rgb, shadow);
 
                 float3 finalColor = lerp(lightFinalColor, dissolveColor, dissolveColorBlend * step(0.0001,_DissolveAmount)) ; 
 
@@ -308,10 +313,16 @@ Shader "Unlit/SceneLitURP"
             #pragma geometry geom
             #pragma fragment frag
 
+            #pragma shader_feature _ALPHATEST_ON
             #pragma shader_feature _AdditionalLights
 
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+            #pragma multi_compile _ _SHADOWS_SOFT
+            #pragma multi_compile _ _MAIN_LIGHT_SHADOWS
+
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/CommonMaterial.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Shadows.hlsl"
             
             CBUFFER_START(UnityPerMaterial)
                 float _Gloss;
@@ -407,6 +418,20 @@ Shader "Unlit/SceneLitURP"
                 float4 effectUV : TEXCOORD4; 
             };
 
+            float GetDistanceFade(float3 positionWS)
+            {
+                float4 posVS = mul(GetWorldToViewMatrix(), float4(positionWS, 1));
+                //return posVS.z;
+                #if UNITY_REVERSED_Z
+                    float vz = -posVS.z;
+                #else
+                    float vz = posVS.z;
+                #endif
+                // jave.lin : 30.0 : start fade out distance, 40.0 : end fade out distance
+                float fade = 1 - smoothstep(30.0, 40.0, vz);
+                return fade;
+            }
+
             v2g vert (a2v v)
             {
                 v2g o = (v2g)0;
@@ -476,12 +501,17 @@ Shader "Unlit/SceneLitURP"
 
                 half3 viewDir = normalize(_WorldSpaceCameraPos.xyz - worldPos);
 
-                //half3 ambient = half3(unity_SHAr.w, unity_SHAg.w, unity_SHAb.w);
-                half3 ambient = SampleSH(worldNormal) * _Ambient;
+                half3 ambient = half3(unity_SHAr.w, unity_SHAg.w, unity_SHAb.w);
+                //half3 ambient = SampleSH(worldNormal) * _Ambient;
 
                 float4 shadowCoord = TransformWorldToShadowCoord(worldNormal);
+                float shadow = MainLightRealtimeShadow(shadowCoord);
                 Light mainLight = GetMainLight(shadowCoord);
 
+                half shadowFadeOut = GetDistanceFade(worldPos); // jave.lin : 计算 shadow fade out
+                shadow = lerp(1, shadow, shadowFadeOut); 
+                //half shadow = mainLight.shadowAttenuation;
+                
                 half halfLambert = saturate(dot(worldNormal, normalize(mainLight.direction)) * 0.5 + 0.5);
                 half3 diffuseColor = SAMPLE_TEXTURE2D(_RampTex, sampler_RampTex, half2(halfLambert, halfLambert)).rgb;
                 
@@ -517,7 +547,7 @@ Shader "Unlit/SceneLitURP"
                 float3 refraction = SAMPLE_TEXTURECUBE(_RefractCubemap, sampler_RefractCubemap, worldRefract).rgb * _RefractColor.rgb;
                 float3 refractionColor = lerp(diffuse, refraction, 1 - fresnel) * _RefractAmount;
 
-                float3 lightFinalColor = ambient + specular + (refractionColor * reflectionColor);
+                float3 lightFinalColor = ambient.rgb + specular + (refractionColor * reflectionColor) * shadow;
 
                 float3 finalColor = lerp(lightFinalColor, dissolveColor, dissolveColorBlend * step(0.0001,_DissolveAmount)) ; 
 
@@ -543,9 +573,9 @@ Shader "Unlit/SceneLitURP"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Shadows.hlsl"
 
-            #pragma vertex vert
-            #pragma geometry geom
-            #pragma fragment frag
+            #pragma vertex shadowVert
+            #pragma geometry shadowGeom
+            #pragma fragment shadowFrag
 
             #pragma shader_feature _ALPHATEST_ON
 
@@ -591,7 +621,7 @@ Shader "Unlit/SceneLitURP"
                 float4 pos: SV_POSITION;
             };
 
-            v2g vert(a2v v)
+            v2g shadowVert(a2v v)
             {
                 v2g o = (v2g)0;
 
@@ -611,7 +641,7 @@ Shader "Unlit/SceneLitURP"
             }
 
             [maxvertexcount(3)]
-            void geom (triangle v2g input[3], inout TriangleStream<g2f> g)
+            void shadowGeom (triangle v2g input[3], inout TriangleStream<g2f> g)
             {
                 g2f o = (g2f)0;
                 for (int i = 0; i<3; i++)
@@ -638,7 +668,7 @@ Shader "Unlit/SceneLitURP"
                 }
             }
 
-            float4 frag(g2f i) : SV_Target 
+            float4 shadowFrag(g2f i) : SV_Target 
             {
                 float4 albedo = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv.xy) * _Color;
 

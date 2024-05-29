@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e5b9ab833007fe4ca63031d50cd77ca, type: 3}
   m_Name: SceneViewDisplayFeature
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
